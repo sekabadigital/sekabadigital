@@ -1,607 +1,249 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Landing Page Gratis dengan AI</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%228%22%20fill%3D%22%2312172B%22/%3E%3Ctext%20x%3D%2216%22%20y%3D%2221%22%20font-family%3D%22monospace%22%20font-size%3D%2213%22%20font-weight%3D%22700%22%20fill%3D%22%23FFB800%22%20text-anchor%3D%22middle%22%3E%26lt%3B/%26gt%3B%3C/text%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --ink:#12172B;
-    --muted:#5B6072;
-    --bg:#F4F6F1;
-    --surface:#FFFFFF;
-    --navy:#12172B;
-    --navy-soft:#1D2444;
-    --amber:#FFB800;
-    --amber-dark:#E6A400;
-    --teal:#17B890;
-    --line:#E3E6DC;
-    --shadow: 0 20px 50px -25px rgba(18,23,43,0.35);
-  }
-  *{box-sizing:border-box; margin:0; padding:0;}
-  html{scroll-behavior:smooth; overflow-x:hidden;}
-  body{
-    font-family:'Plus Jakarta Sans', sans-serif;
-    background:var(--bg);
-    color:var(--ink);
-    line-height:1.6;
-    -webkit-font-smoothing:antialiased;
-    text-align:left;
-    overflow-x:hidden;
-    width:100%;
-  }
-  h1,h2,h3,h4{font-family:'Sora', sans-serif; letter-spacing:-0.01em;}
-  a{text-decoration:none; color:inherit;}
-  ul{list-style:none;}
-  img,svg{display:block;}
-  .wrap{max-width:1120px; margin:0 auto; padding:0 24px; width:100%;}
-  .mono{font-family:'JetBrains Mono', monospace;}
-  section{padding:88px 0; overflow:hidden;}
-  .eyebrow{
-    display:inline-flex; align-items:center; gap:8px;
-    font-family:'JetBrains Mono', monospace;
-    font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase;
-    color:var(--navy); background:rgba(23,184,144,0.12);
-    border:1px solid rgba(23,184,144,0.35);
-    padding:6px 14px; border-radius:999px;
-  }
-  .eyebrow.on-dark{ color:var(--amber); background:rgba(255,184,0,0.1); border-color:rgba(255,184,0,0.35);}
-
-  /* ===== HEADER ===== */
-  header{
-    position:fixed; top:0; z-index:50;
-    background:rgba(244,246,241,0.88);
-    backdrop-filter:blur(10px);
-    border-bottom:1px solid var(--line);
-    width: 100%;
-  }
-  .nav{display:flex; align-items:center; justify-content:space-between; gap:20px; padding:16px 24px;}
-  .nav-links{display:flex; align-items:center; gap:28px; flex:1; justify-content:center;}
-  .nav-links a{
-    font-size:14px; font-weight:600; color:var(--muted); white-space:nowrap;
-    padding:6px 2px; border-bottom:2px solid transparent; transition:color .15s ease, border-color .15s ease;
-  }
-  .nav-links a:hover{color:var(--navy); border-color:var(--teal);}
-  .menu-toggle{
-    display:none; background:none; border:1px solid var(--line); border-radius:10px;
-    width:40px; height:40px; align-items:center; justify-content:center; cursor:pointer; flex:none;
-  }
-  .nav-mobile{
-    display:none; flex-direction:column; gap:2px; padding:8px 24px 18px; border-top:1px solid var(--line);
-  }
-  .nav-mobile a{
-    font-size:15px; font-weight:600; color:var(--ink); padding:12px 4px; border-bottom:1px solid var(--line);
-  }
-  .nav-mobile.open{display:flex;}
-  .logo{display:flex; align-items:center; gap:9px; font-family:'Sora',sans-serif; font-weight:800; font-size:19px;}
-  .logo-mark{width:30px; height:30px; border-radius:8px; background:var(--navy); display:flex; align-items:center; justify-content:center;}
-  .logo-mark span{color:var(--amber); font-family:'JetBrains Mono',monospace; font-weight:700; font-size:15px;}
-  .btn{
-    display:inline-flex; align-items:center; justify-content:center; gap:8px;
-    font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:15px;
-    padding:13px 26px; border-radius:12px; border:none; cursor:pointer;
-    transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
-  }
-  .btn-primary{background:var(--amber); color:var(--navy); box-shadow:0 10px 25px -10px rgba(255,184,0,0.7);}
-  .btn-primary:hover{background:var(--amber-dark); transform:translateY(-2px);}
-  .btn-nav{padding:10px 20px; font-size:14px;}
-  .btn-ghost-dark{background:transparent; color:var(--surface); border:1.5px solid rgba(255,255,255,0.35);}
-  .btn-ghost-dark:hover{background:rgba(255,255,255,0.08);}
-
-  /* ===== HERO ===== */
-  .hero{padding:72px 0 40px;}
-  .hero-grid{display:grid; grid-template-columns:1.1fr 0.9fr; gap:56px; align-items:center;}
-  .hero h1{font-size:40px; font-weight:800; line-height:1.14; margin:20px 0 18px; color:var(--navy);}
-  .hero h1 em{font-style:normal; color:var(--teal); position:relative;}
-  .hero p.sub{font-size:17px; color:var(--muted); max-width:500px; margin-bottom:30px; text-align:justify;}
-  .hero-ctas{display:flex; align-items:center; gap:18px; flex-wrap:wrap; margin-bottom:26px;}
-  .trust-line{font-size:13px; color:var(--muted); display:flex; gap:8px; align-items:center;}
-  .trust-line svg{flex:none;}
-
-  /* cover mock */
-  .cover-stage{position:relative; display:flex; justify-content:center; align-items:center; min-height:420px; padding:56px 60px;}
-  .cover{
-    width:250px; height:340px; border-radius:14px; background:linear-gradient(155deg,var(--navy) 0%, var(--navy-soft) 65%, #232B52 100%);
-    box-shadow:var(--shadow), 0 0 0 1px rgba(255,255,255,0.06) inset;
-    position:relative; z-index:1; overflow:hidden; transform:rotate(-4deg);
-    display:flex; flex-direction:column; justify-content:space-between; padding:26px 22px;
-  }
-  .cover::before{
-    content:''; position:absolute; top:0; right:0; width:140px; height:140px;
-    background:radial-gradient(circle, rgba(255,184,0,0.35), transparent 70%);
-  }
-  .cover .tag{font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--amber); letter-spacing:0.1em; text-transform:uppercase;}
-  .cover h3{color:#fff; font-size:21px; line-height:1.28; margin-top:14px; text-align:left;}
-  .cover .foot{color:rgba(255,255,255,0.55); font-size:11px; font-family:'JetBrains Mono',monospace;}
-  .badge-float{
-    position:absolute; z-index:5; background:var(--surface); border-radius:12px; padding:10px 14px;
-    box-shadow:var(--shadow); font-size:13px; font-weight:700; display:flex; align-items:center; gap:8px;
-    white-space:nowrap; text-align:left;
-  }
-  .badge-float.b1{top:-6px; left:-14px; color:var(--teal);}
-  .badge-float.b2{bottom:0px; right:-18px; color:var(--navy);}
-
-  /* ===== CARA KERJA (generik, tanpa membocorkan alat) ===== */
-  .steps-band{background:var(--navy); padding:56px 0 62px; border-top:1px solid rgba(255,255,255,0.08); overflow:hidden;}
-  .steps-head{text-align:center; margin-bottom:38px;}
-  .steps-head h2{color:#fff; font-size:28px; margin-top:14px; max-width:560px; margin-left:auto; margin-right:auto;}
-  .steps-head p{color:rgba(255,255,255,0.6); font-size:14.5px; max-width:520px; margin:12px auto 0;}
-  .steps-row{display:flex; align-items:flex-start; justify-content:space-between; gap:24px; position:relative;}
-  .steps-row::before{
-    content:''; position:absolute; top:26px; left:26px; right:26px; height:2px;
-    background:repeating-linear-gradient(90deg, rgba(255,255,255,0.16) 0 8px, transparent 8px 16px);
-  }
-  .s-node{position:relative; z-index:2; flex:1; text-align:center; padding:0 6px;}
-  .s-dot{
-    width:52px; height:52px; border-radius:50%; margin:0 auto 16px;
-    background:var(--amber); border:2px solid var(--amber);
-    display:flex; align-items:center; justify-content:center;
-    box-shadow:0 0 0 8px rgba(255,184,0,0.14);
-  }
-  .s-node h4{color:#fff; font-size:15.5px; margin-bottom:6px;}
-  .s-node p{color:rgba(255,255,255,0.55); font-size:13px; max-width:190px; margin:0 auto;}
-  .steps-note{
-    max-width:480px; margin:38px auto 0; text-align:center; font-family:'JetBrains Mono',monospace;
-    font-size:12.5px; color:rgba(255,184,0,0.85); letter-spacing:0.02em;
-  }
-
-  /* ===== MASALAH ===== */
-  .problem{background:var(--surface); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
-  .problem-grid{display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;}
-  .problem h2{font-size:27px; color:var(--navy); margin-bottom:16px;}
-  .problem p{color:var(--muted); font-size:16px; margin-bottom:14px; text-align:justify; max-width:480px;}
-  .quote-block{
-    background:var(--bg); border-left:3px solid var(--teal); border-radius:8px;
-    padding:22px 24px; font-size:15px; text-align:justify; color:var(--navy); font-weight:600;
-  }
-
-  /* ===== SECTION HEAD ===== */
-  .sec-head{text-align:center; max-width:600px; margin:0 auto 48px;}
-  .sec-head h2{font-size:32px; color:var(--navy); margin-top:14px;}
-  .sec-head p{color:var(--muted); font-size:16px; margin-top:12px;}
-
-  /* ===== BENEFITS ===== */
-  .benefit-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:20px;}
-  .b-card{background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:28px 22px; transition:transform .2s ease, box-shadow .2s ease;}
-  .b-card:hover{transform:translateY(-4px); box-shadow:var(--shadow);}
-  .b-icon{width:44px; height:44px; border-radius:11px; background:rgba(23,184,144,0.12); display:flex; align-items:center; justify-content:center; margin-bottom:16px;}
-  .b-card h3{font-size:16px; margin-bottom:8px; color:var(--navy); text-align:left;}
-  .b-card p{font-size:13.5px; color:var(--muted); text-align:justify;}
-
-  /* ===== ISI EBOOK ===== */
-  .contents{background:var(--surface); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
-  .chapter-list{display:grid; grid-template-columns:1fr 1fr; gap:12px 28px; max-width:900px; margin:0 auto;}
-  .chapter{display:flex; gap:16px; align-items:flex-start; padding:16px 4px; border-bottom:1px dashed var(--line);}
-  .ch-num{font-family:'JetBrains Mono',monospace; font-weight:700; color:var(--teal); font-size:14px; flex:none; width:34px; padding-top:1px;}
-  .chapter h4{font-size:15px; color:var(--navy); margin-bottom:3px;}
-  .chapter p{font-size:13px; color:var(--muted);}
-  .chapter.highlight{background:rgba(255,184,0,0.08); border-radius:10px; border-bottom:1px dashed rgba(255,184,0,0.4); padding:16px 12px;}
-
-  /* ===== PERSONAS ===== */
-  .persona-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
-  .persona-card{background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:30px 24px; text-align:left;}
-  .persona-icon{width:46px; height:46px; border-radius:12px; background:var(--navy); display:flex; align-items:center; justify-content:center; margin-bottom:18px;}
-  .persona-card h3{font-size:17px; color:var(--navy); margin-bottom:8px; text-align:left;}
-  .persona-card p{font-size:13.5px; color:var(--muted); text-align:justify;}
-
-  /* ===== HARGA ===== */
-  .pricing{background:var(--navy); position:relative; overflow:hidden;}
-  .pricing::before{content:''; position:absolute; top:-120px; right:-120px; width:360px; height:360px; border-radius:50%; background:radial-gradient(circle, rgba(255,184,0,0.18), transparent 70%);}
-  .price-card{
-    max-width:560px; margin:0 auto; background:var(--surface); border-radius:22px; padding:42px 40px;
-    box-shadow:0 30px 70px -20px rgba(0,0,0,0.5); position:relative; z-index:2;
-  }
-  .price-card .eyebrow{margin-bottom:16px;}
-  .price-row{display:flex; align-items:baseline; gap:14px; margin:18px 0 6px; flex-wrap:wrap;}
-  .price-old{font-family:'JetBrains Mono',monospace; color:var(--muted); text-decoration:line-through; font-size:18px;}
-  .price-new{font-family:'Sora',sans-serif; font-weight:800; font-size:44px; color:var(--navy);}
-  .price-note{font-size:13px; color:var(--muted); margin-bottom:26px;}
-  .price-list{margin-bottom:28px;}
-  .price-list li{display:flex; gap:10px; align-items:flex-start; font-size:14.5px; color:var(--ink); margin-bottom:12px;}
-  .price-list svg{flex:none; margin-top:2px;}
-  .price-card .btn-primary{width:100%; font-size:16px; padding:16px 26px;}
-  .price-guarantee{text-align:center; font-size:12.5px; color:var(--muted); margin-top:16px;}
-
-  /* ===== TESTIMONI ===== */
-  .testi-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
-  .testi-card{background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:26px;}
-  .testi-stars{color:var(--amber-dark); font-size:14px; margin-bottom:14px; letter-spacing:2px;}
-  .testi-card p.quote{font-size:14.5px; color:var(--ink); margin-bottom:20px; font-style:italic; text-align:justify;}
-  .testi-person{display:flex; align-items:center; gap:12px;}
-  .avatar{width:40px; height:40px; border-radius:50%; background:var(--bg); border:1px solid var(--line); display:flex; align-items:center; justify-content:center; font-family:'Sora',sans-serif; font-weight:700; color:var(--navy); font-size:14px;}
-  .testi-person span{display:block; font-size:13.5px; color:var(--muted);}
-  .testi-person strong{font-size:14px; color:var(--navy);}
-
-  /* ===== AI NOTE ===== */
-  .ai-note{
-    max-width:760px; margin:0 auto; background:var(--surface); border:1px dashed rgba(23,184,144,0.5);
-    border-radius:16px; padding:22px 26px; display:flex; gap:16px; align-items:flex-start;
-  }
-  .ai-note svg{flex:none; margin-top:2px;}
-  .ai-note p{font-size:13.5px; color:var(--muted); text-align:left;}
-  .ai-note strong{color:var(--navy);}
-
-  /* ===== FAQ ===== */
-  .faq{max-width:760px; margin:0 auto;}
-  .faq-item{border-bottom:1px solid var(--line);}
-  .faq-q{
-    width:100%; text-align:left; background:none; border:none; padding:20px 4px;
-    display:flex; justify-content:space-between; align-items:center; cursor:pointer;
-    font-family:'Sora',sans-serif; font-weight:700; font-size:15.5px; color:var(--navy);
-  }
-  .faq-q .plus{font-size:20px; color:var(--teal); transition:transform .2s ease; flex:none; margin-left:14px;}
-  .faq-item.open .faq-q .plus{transform:rotate(45deg);}
-  .faq-a{max-height:0; overflow:hidden; transition:max-height .25s ease;}
-  .faq-a p{font-size:14px; color:var(--muted); padding:0 4px 20px;}
-
-  /* ===== CTA PENUTUP ===== */
-  .cta-final{background:var(--navy-soft); text-align:center;}
-  .cta-final h2{color:#fff; font-size:30px; max-width:640px; margin:0 auto 14px;}
-  .cta-final p{color:rgba(255,255,255,0.65); max-width:520px; margin:0 auto 30px; font-size:15.5px;}
-
-  /* ===== FOOTER ===== */
-  footer{background:var(--navy); padding:36px 0; text-align:center;}
-  footer p{color:rgba(255,255,255,0.45); font-size:12.5px;}
-
-  /* ===== RESPONSIVE ===== */
-  @media (max-width:900px){
-    .hero-grid{grid-template-columns:1fr;}
-    .cover-stage{order:-1; min-height:300px; padding:44px 30px;}
-    .problem-grid{grid-template-columns:1fr; gap:30px;}
-    .benefit-grid{grid-template-columns:1fr 1fr;}
-    .chapter-list{grid-template-columns:1fr;}
-    .persona-grid{grid-template-columns:1fr;}
-    .testi-grid{grid-template-columns:1fr;}
-    .steps-row{flex-wrap:wrap; row-gap:26px;}
-    .steps-row::before{display:none;}
-    .s-node{flex:1 1 45%;}
-    .nav-links{display:none;}
-    .menu-toggle{display:flex;}
-  }
-  @media (max-width:640px){
-    section{padding:60px 0;}
-    .hero{padding:44px 0 30px;}
-    .hero h1{font-size:32px;}
-    .benefit-grid{grid-template-columns:1fr;}
-    .price-card{padding:30px 22px;}
-    .price-new{font-size:36px;}
-    .nav .btn-nav-label{display:none;}
-  }
-  :focus-visible{outline:2px solid var(--teal); outline-offset:2px;}
-  @media (prefers-reduced-motion: reduce){
-    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
-  }
-  .cover-img{
-  width:250px; height:340px; border-radius:14px; object-fit:cover;
-  box-shadow:var(--shadow); transform:rotate(-4deg);
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Membuat Landing Page Gratis dengan Bantuan AI</title>
+    <meta name="description"
+        content="Ebook panduan praktis membuat landing page tanpa coding dan tanpa biaya menggunakan AI. Dapatkan sekarang dengan sistem Traktir seikhlasnya!">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<header>
-  <div class="nav wrap">
-    <div class="logo"><div class="logo-mark"><span>&lt;/&gt;</span></div>SekabaDigital</div>
-    <nav class="nav-links">
-      <a href="#manfaat">Manfaat</a>
-      <a href="#isi">Isi Ebook</a>
-      <a href="#untuk-siapa">Untuk Siapa</a>
-      <a href="#harga">Harga</a>
-      <a href="#testimoni">Testimoni</a>
-      <a href="#faq">FAQ</a>
-    </nav>
-    <button class="menu-toggle" id="menuToggle" aria-label="Buka menu navigasi" aria-expanded="false">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h16" stroke="#12172B" stroke-width="2" stroke-linecap="round"/></svg>
-    </button>
-  </div>
-  <nav class="nav-mobile" id="navMobile">
-    <a href="#manfaat">Manfaat</a>
-    <a href="#isi">Isi Ebook</a>
-    <a href="#untuk-siapa">Untuk Siapa</a>
-    <a href="#harga">Harga</a>
-    <a href="#testimoni">Testimoni</a>
-    <a href="#faq">FAQ</a>
-  </nav>
-</header>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="wrap hero-grid">
-    <div>
-      <span class="eyebrow">Ebook Panduan · Tanpa Coding · Tanpa Budget Besar</span>
-      <h1>Landing Page Gratis 0 Rupiah, Langsung Online <em>Dengan Bantuan AI</em></h1>
-      <p class="sub">Panduan langkah demi langkah untuk pemula, minta AI menuliskan kodenya, rapikan sedikit hasilnya, lalu publish gratis dalam 60-90 menit. Tanpa sewa programmer, tanpa modal besar.</p>
-      <div class="hero-ctas">
-        <a href="#harga" class="btn btn-primary">Belajar Landing Page Sekarang</a>
-      </div>
-      </div>
-    <div class="cover-stage">
-      <img src="https://raw.githubusercontent.com/sekabadigital/landingpagegratis/3f15420ac8a6de9f55fcb5394b860b512e7bbafd/coverebook.svg" alt="Cover Ebook" class="cover-img">
-      <div class="badge-float b2">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="2" stroke="#12172B" stroke-width="2"/><path d="M3 9h18" stroke="#12172B" stroke-width="2"/></svg>
-        Rahasia Lengkap di Bab 9
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CARA KERJA (generik, tanpa membocorkan alat) -->
-<div class="steps-band">
-  <div class="wrap">
-    <div class="steps-head">
-      <span class="eyebrow on-dark">Kedengarannya Mustahil? Nggak Juga</span>
-      <h2>Cuma 3 Langkah Sederhana, Detailnya Ada di Dalam Ebook</h2>
-      <p>Nggak perlu instal software berat atau paham istilah teknis. Alat, trik, dan urutan pastinya kami bongkar tuntas lengkap dengan screenshot, halaman demi halaman.</p>
-    </div>
-    <div class="steps-row">
-      <div class="s-node">
-        <div class="s-dot"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" stroke="#12172B" stroke-width="1.8"/></svg></div>
-        <h4>Ceritakan Idemu</h4>
-        <p>Jelaskan produk atau jasamu pakai kalimat sederhana, sesantai ngobrol.</p>
-      </div>
-      <div class="s-node">
-        <div class="s-dot"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 4l1.8 4.2L18 10l-4.2 1.8L12 16l-1.8-4.2L6 10l4.2-1.8L12 4z" stroke="#12172B" stroke-width="1.8" stroke-linejoin="round"/></svg></div>
-        <h4>Rapikan Sedikit Hasilnya</h4>
-        <p>Sentuh teks, warna, dan gambar sesuai selera, tidak ada logika rumit.</p>
-      </div>
-      <div class="s-node">
-        <div class="s-dot"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M13 2L4.5 13.5H11L10 22L19.5 9.5H13L13 2Z" stroke="#12172B" stroke-width="1.8" stroke-linejoin="round"/></svg></div>
-        <h4>Publish, Online Hari Ini</h4>
-        <p>Satu langkah terakhir, dan halamanmu resmi punya link sendiri.</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- MASALAH -->
-<section class="problem">
-  <div class="wrap problem-grid">
-    <div>
-      <span class="eyebrow">Masalah yang (Mungkin) Kamu Rasakan</span>
-      <h2>Idemu Sudah Siap Dijual, Tapi Selalu Mandek di Kata "Nanti Aja"</h2>
-      <p>Kamu tahu produk atau jasamu butuh landing page biar kelihatan profesional dan dipercaya calon pembeli. Tapi begitu buka tutorial coding, kepala langsung pusing — atau kamu pilih tunda sampai ada budget lebih buat sewa programmer.</p>
-      <p>Masalahnya bukan karena kamu kurang mampu. Dulu memang belum ada jalan pintas yang benar-benar mudah dan gratis.</p>
-    </div>
-    <div class="quote-block">
-      "Kualitas landing page-mu sekarang nggak lagi ditentukan seberapa besar budget atau seberapa jago kamu coding, tapi seberapa jelas kamu kasih instruksi ke AI, dan seberapa rajin kamu ikuti langkahnya."
-    </div>
-  </div>
-</section>
-
-<!-- MANFAAT -->
-<section id="manfaat">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow">Kenapa Ebook Ini</span>
-      <h2>Empat Alasan Kenapa Metode Ini Cocok Buat Kamu</h2>
-    </div>
-    <div class="benefit-grid">
-      <div class="b-card">
-        <div class="b-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M13 2L4.5 13.5H11L10 22L19.5 9.5H13L13 2Z" stroke="#17B890" stroke-width="1.8" stroke-linejoin="round"/></svg></div>
-        <h3>Online dalam 60–90 Menit</h3>
-        <p>Satu sesi praktik saja, dari file kosong sampai halaman punya link sendiri di internet.</p>
-      </div>
-      <div class="b-card">
-        <div class="b-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#17B890" stroke-width="1.8"/><path d="M9 12h6M12 9v6" stroke="#17B890" stroke-width="1.8" stroke-linecap="round"/></svg></div>
-        <h3>Gratis, Tanpa Programmer</h3>
-        <p>Semua tools yang diajarkan di dalam ebook ini 100% gratis untuk pemula, nol biaya langganan.</p>
-      </div>
-      <div class="b-card">
-        <div class="b-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="2" stroke="#17B890" stroke-width="1.8"/><path d="M7 8h10M7 12h10M7 16h6" stroke="#17B890" stroke-width="1.8" stroke-linecap="round"/></svg></div>
-        <h3>Langkah Konkret + Screenshot</h3>
-        <p>Tidak ada instruksi mengambang, setiap langkah punya tempat tempel gambar panduan.</p>
-      </div>
-      <div class="b-card">
-        <div class="b-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 20V10M12 20V4M20 20v-7" stroke="#17B890" stroke-width="1.8" stroke-linecap="round"/></svg></div>
-        <h3>Cocok Pemula</h3>
-        <p>Belum pernah coding sama sekali? Justru ebook ini dibuat khusus untuk kamu.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ISI EBOOK -->
-<section class="contents" id="isi">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow">Isi Lengkap</span>
-      <h2>Apa yang Kamu Dapat di Dalam Ebook Ini</h2>
-      <p>10 bab berurutan, dari kenalan alat sampai landing page-mu benar-benar live.</p>
-    </div>
-    <div class="chapter-list">
-      <div class="chapter"><span class="ch-num">01</span><div><h4>Kenapa Kamu Tidak Butuh Budget Besar</h4><p>Membongkar mitos landing page bagus harus mahal dan butuh programmer.</p></div></div>
-      <div class="chapter"><span class="ch-num">02</span><div><h4>Kenalan dengan 4 Alat Utama</h4><p>Empat "alat dapur" wajib, lengkap cara daftar dan pasangnya langkah demi langkah.</p></div></div>
-      <div class="chapter"><span class="ch-num">03</span><div><h4>Persiapan Sebelum Praktik</h4><p>Dasar dan riset cepat 15 menit sebelum mulai praktik.</p></div></div>
-      <div class="chapter"><span class="ch-num">04</span><div><h4>Studi Kasus dan Bank Prompt</h4><p>Amunisi contoh prompt yang sudah terbukti jalan, tinggal kamu sesuaikan.</p></div></div>
-      <div class="chapter"><span class="ch-num">05</span><div><h4>Menulis Copy yang Menjual</h4><p>Formula headline 3 detik, isi konten fokus manfaat, dan CTA yang kuat, sebelum minta AI generate kode.</p></div></div>
-      <div class="chapter"><span class="ch-num">06</span><div><h4>Praktik Langkah demi Langkah</h4><p>Momen inti: membuat landing page pertamamu dari nol sampai jadi.</p></div></div>
-      <div class="chapter"><span class="ch-num">07</span><div><h4>Publish Secara Gratis</h4><p>Dari file di laptop sampai punya link hidup yang bisa dibuka siapa saja.</p></div></div>
-      <div class="chapter"><span class="ch-num">08</span><div><h4>Setelah Live Apa yang Dipantau</h4><p>Cara tahu kenapa pengunjung belum klik tombol beli, dan cara membenahinya.</p></div></div>
-      <div class="chapter highlight"><span class="ch-num">09</span><div><h4>Studi Kasus Lengkap (Bonus)</h4><p>Walkthrough nyata membangun landing page penjualan ebook ini sendiri, dari nol sampai live.</p></div></div>
-      <div class="chapter"><span class="ch-num">10</span><div><h4>Penutup dan Langkah Selanjutnya</h4><p>Rekap lengkap, kesalahan yang wajib dihindari, dan langkah lanjutan setelah landing page-mu online.</p></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- UNTUK SIAPA -->
-<section id="untuk-siapa">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow">Cocok untuk Siapa</span>
-      <h2>Ebook Ini Tepat untuk Kamu Kalau…</h2>
-    </div>
-    <div class="persona-grid">
-      <div class="persona-card">
-        <div class="persona-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 21V9l9-6 9 6v12" stroke="#FFB800" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 21v-6h6v6" stroke="#FFB800" stroke-width="1.8"/></svg></div>
-        <h3>Pemilik UMKM</h3>
-        <p>Mau jualan produk fisik secara online tapi belum sanggup sewa programmer atau agency.</p>
-      </div>
-      <div class="persona-card">
-        <div class="persona-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="2" stroke="#FFB800" stroke-width="1.8"/><path d="M8 9h8M8 13h5" stroke="#FFB800" stroke-width="1.8" stroke-linecap="round"/></svg></div>
-        <h3>Freelancer</h3>
-        <p>Butuh halaman portofolio atau penawaran jasa yang kelihatan profesional dalam semalam.</p>
-      </div>
-      <div class="persona-card">
-        <div class="persona-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#FFB800" stroke-width="1.8"/><path d="M8 12l3 3 5-6" stroke="#FFB800" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <h3>Affiliate Marketer</h3>
-        <p>Butuh landing page promosi produk orang lain yang bisa dibuat cepat dan diganti-ganti sendiri.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- HARGA -->
-<section class="pricing" id="harga">
-  <div class="wrap">
-    <div class="price-card">
-      <span class="eyebrow">Penawaran Terbatas</span>
-      <h2 style="color:var(--navy); font-size:24px;">Ebook Landing Page Gratis dengan AI</h2>
-      <div class="price-row">
-        <span class="price-old">Rp149.000</span>
-        <span class="price-new">Rp49.000</span>
-      </div>
-      <p class="price-note">Sekali bayar, akses selamanya. Bukan langganan.</p>
-      <ul class="price-list">
-        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#17B890" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Ebook PDF 10 bab lengkap dengan screenshot</li>
-        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#17B890" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Prompt siap salin-tempel, tinggal edit pakai</li>
-        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#17B890" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Bangun landing page dari nol sampai live</li>
-        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#17B890" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Bonus: Ide Menghasilkan Uang dari Skill Ini</li>
-        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#17B890" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Akses Grup WhatsApp Komunitas Belajar</li>
-      </ul>
-      <a href="http://lynk.id/sekabadigital/0xdjkmdmgl0n/checkout" target="_blank" class="btn btn-primary">Belajar Landing Page Sekarang</a>
-      </div>
-  </div>
-</section>
-
-<!-- TESTIMONI -->
-<section id="testimoni">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow">Kata Mereka yang Sudah Mencoba</span>
-      <h2>Bukan Cuma Teori, Ini Hasil Nyatanya</h2>
-    </div>
-    <div class="testi-grid">
-      <div class="testi-card">
-        <div class="testi-stars">★★★★★</div>
-        <p class="quote">"Saya jualan kerupuk rumahan, sama sekali nggak ngerti coding. Ikuti bab per bab, malam itu juga landing page saya sudah online dan langsung dipakai promosi di grup WA."</p>
-        <div class="testi-person">
-          <div class="avatar">RS</div>
-          <div><strong>Rina S.</strong><span>Pemilik UMKM, Bandung</span></div>
+    <!-- Header / Navbar (Optional, minimal) -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">Sekaba<span>Digital</span></div>
+            <a href="#traktir" class="btn-primary-small">Ambil Ebook</a>
         </div>
-      </div>
-      <div class="testi-card">
-        <div class="testi-stars">★★★★★</div>
-        <p class="quote">"Prompt di Bab 4 itu penyelamat. Saya tinggal sesuaikan sedikit untuk halaman penawaran jasa desain saya, hemat waktu berjam-jam dibanding coba-coba sendiri."</p>
-        <div class="testi-person">
-          <div class="avatar">DA</div>
-          <div><strong>Dimas A.</strong><span>Freelancer, Surabaya</span></div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-container">
+            <div class="hero-content">
+                <span class="badge">Ebook Panduan Praktis</span>
+                <h1>Bikin Landing Page <span>Gratis</span> & Cepat pakai AI!</h1>
+                <p>Nggak perlu jago coding, nggak perlu bayar langganan bulanan. Pelajari rahasia membuat landing page
+                    berkonversi tinggi hanya dengan bantuan AI dalam hitungan menit.</p>
+                <div class="hero-cta">
+                    <a href="#traktir" class="btn-primary">Ambil Ebooknya Sekarang 🚀</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="images/Buat%20Landing%20Page%20Gratis.png" alt="Ilustrasi membuat landing page dengan AI">
+            </div>
         </div>
-      </div>
-      <div class="testi-card">
-        <div class="testi-stars">★★★★★</div>
-        <p class="quote">"Studi kasus di Bab 9 itu clear banget, persis kayak ditemenin langsung dari nol sampai online. Sekarang saya bisa ganti harga dan teks sendiri kapan aja tanpa bingung."</p>
-        <div class="testi-person">
-          <div class="avatar">NF</div>
-          <div><strong>Nadia F.</strong><span>Affiliate Marketer, Jakarta</span></div>
+    </section>
+
+    <!-- Problem & Solution -->
+    <section class="problem-solution">
+        <div class="container ps-container">
+            <div class="problem-card">
+                <h3>Kenapa Bikin Landing Page Bikin Pusing? 🤯</h3>
+                <ul>
+                    <li>❌ Harus belajar coding (HTML/CSS) yang ribet.</li>
+                    <li>❌ Biaya sewa domain & hosting mahal.</li>
+                    <li>❌ Sewa jasa desainer web butuh jutaan rupiah.</li>
+                    <li>❌ Pusing mikirin copywriting yang bisa jualan.</li>
+                </ul>
+            </div>
+            <div class="solution-card">
+                <h3>Solusinya Ada di Ebook Ini! 💡</h3>
+                <ul>
+                    <li>✅ Pakai tools gratisan yang di-support AI.</li>
+                    <li>✅ Nggak perlu ngerti bahasa pemrograman sama sekali.</li>
+                    <li>✅ Dibantu AI bikin copywriting yang memikat pembeli.</li>
+                    <li>✅ Praktek langsung, jadi dalam hitungan jam.</li>
+                </ul>
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- AI NOTE -->
-<section style="padding-top:0;">
-  <div class="wrap">
-    <div class="ai-note">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#17B890" stroke-width="1.8"/><path d="M12 8v4l3 2" stroke="#17B890" stroke-width="1.8" stroke-linecap="round"/></svg>
-      <p><strong>Transparansi kecil:</strong> Landing page yang sedang kamu baca ini sendiri dibuat dengan bantuan AI, mengikuti metode yang diajarkan di dalam ebook, bukti langsung bahwa caranya benar-benar bekerja, bukan cuma teori. Detail lengkap prosesnya ada di Bab 9.</p>
-    </div>
-  </div>
-</section>
+    <!-- Isi Ebook -->
+    <section class="contents">
+        <div class="container">
+            <h2 class="section-title">Apa Saja yang Akan Kamu Pelajari?</h2>
+            <div class="content-grid">
+                <div class="content-item">
+                    <div class="icon">🤖</div>
+                    <h4>Pengenalan Tools AI Gratis</h4>
+                    <p>Daftar platform rahasia yang bisa kamu manfaatkan 100% gratis.</p>
+                </div>
+                <div class="content-item">
+                    <div class="icon">✍️</div>
+                    <h4>Prompt Copywriting</h4>
+                    <p>Contekan prompt AI untuk menulis headline dan penawaran tak tertolak.</p>
+                </div>
+                <div class="content-item">
+                    <div class="icon">🎨</div>
+                    <h4>Desain & Struktur</h4>
+                    <p>Template struktur landing page yang terbukti menghasilkan penjualan.</p>
+                </div>
+                <div class="content-item">
+                    <div class="icon">🚀</div>
+                    <h4>Publish Tanpa Hosting</h4>
+                    <p>Cara mempublikasikan halamanmu ke internet tanpa biaya hosting sepeserpun.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<!-- FAQ -->
-<section id="faq">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow">Masih Ragu?</span>
-      <h2>Pertanyaan yang Sering Ditanyakan</h2>
-    </div>
-    <div class="faq">
-      <div class="faq-item">
-        <button class="faq-q">Saya benar-benar nggak ngerti coding, apa bisa? <span class="plus">+</span></button>
-        <div class="faq-a"><p>Bisa. Ebook ini memang ditulis khusus untuk pemula, kamu tidak menulis kode dari nol, AI yang menuliskannya, kamu tinggal mengganti teks dan warna lewat panduan langkah demi langkah.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q">Semua tools yang dipakai beneran gratis? <span class="plus">+</span></button>
-        <div class="faq-a"><p>Iya. Seluruh alat yang diajarkan di dalam ebook ini punya versi gratis yang cukup untuk bikin landing page pemula sampai online, tidak ada biaya tersembunyi. Nama dan cara daftarnya dijelaskan lengkap di Bab 2.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q">Laptop saya spesifikasinya biasa saja, apa cukup? <span class="plus">+</span></button>
-        <div class="faq-a"><p>Cukup. Semua alat yang diajarkan ringan dan bisa jalan di laptop atau komputer standar untuk kerja kantoran, tidak butuh spek tinggi sama sekali.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q">Setelah beli, saya dapat apa saja? <span class="plus">+</span></button>
-        <div class="faq-a"><p>Kamu dapat file ebook PDF 10 bab lengkap dengan screenshot, bank prompt siap salin-tempel, dan akses ke grup WhatsApp komunitas untuk tanya jawab kalau ada langkah yang bikin stuck.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q">Bisa dipakai untuk jualan apa saja? <span class="plus">+</span></button>
-        <div class="faq-a"><p>Bisa untuk produk fisik UMKM, penawaran jasa freelancer, sampai halaman promosi produk affiliate polanya sama, tinggal kamu sesuaikan teks dan gambarnya.</p></div>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- CTA PENUTUP -->
-<section class="cta-final">
-  <div class="wrap">
-    <h2>Masih Ragu? Ingat! Setiap Hari Tanpa Landing Page adalah Hari Tanpa Penjualan.</h2>
-    <p>Halaman panduan, prompt siap pakai sudah menunggu tinggal satu klik lagi.</p>
-    <a href="#harga" class="btn btn-primary">Ya, Saya Mau Punya Landing Page Sendiri!</a>
-  </div>
-</section>
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="container">
+            <h2 class="section-title">Kata Mereka yang Sudah Baca</h2>
+            <div class="testimonial-grid">
+                <div class="testi-card">
+                    <p>"Gila sih, materi daging banget! Hari ini baca, besoknya landing page jualan keripik gue udah
+                        live tanpa keluar modal."</p>
+                    <div class="testi-author">
+                        <img src="https://placehold.co/50x50/333/fff?text=B" alt="Budi" class="avatar">
+                        <div>
+                            <strong>Budi S.</strong>
+                            <span>Owner UMKM Kuliner</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testi-card">
+                    <p>"Prompt AI yang dikasih bener-bener ngebantu banget buat bikin copywriting. Tinggal copas dan
+                        edit dikit."</p>
+                    <div class="testi-author">
+                        <img src="https://placehold.co/50x50/333/fff?text=S" alt="Siti" class="avatar">
+                        <div>
+                            <strong>Siti A.</strong>
+                            <span>Freelancer</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testi-card">
+                    <p>"Desain template yang diajarin simpel tapi premium. Konversi jualan ebookku naik 3x lipat sejak
+                        pakai trik ini!"</p>
+                    <div class="testi-author">
+                        <img src="https://placehold.co/50x50/333/fff?text=D" alt="Dimas" class="avatar">
+                        <div>
+                            <strong>Dimas P.</strong>
+                            <span>Content Creator</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<footer>
-  <div class="wrap">
-    <p>© 2026 Sekaba Digital. Semua Hak Dilindungi.</p>
-  </div>
-</footer>
+    <!-- Traktir / Pricing Section -->
+    <section id="traktir" class="pricing">
+        <div class="container">
+            <h2 class="section-title">Ambil Ebooknya Sekarang!</h2>
+            <p class="pricing-subtitle">Pilih nominal "Traktir" seikhlasnya. Semua pilihan mendapatkan <strong>manfaat
+                    yang sama persis</strong>: Ebook PDF + Akses Grup Diskusi.</p>
 
-<script>
-  var menuToggle = document.getElementById('menuToggle');
-  var navMobile = document.getElementById('navMobile');
-  menuToggle.addEventListener('click', function(){
-    var isOpen = navMobile.classList.toggle('open');
-    menuToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-  });
-  navMobile.querySelectorAll('a').forEach(function(link){
-    link.addEventListener('click', function(){
-      navMobile.classList.remove('open');
-      menuToggle.setAttribute('aria-expanded', 'false');
-    });
-  });
-</script>
+            <div class="pricing-cards">
+                <div class="price-card" data-tier="17000"
+                    data-link="http://lynk.id/sekabadigital/0xdjkmdmgl0n/checkout">
+                    <div class="tier-icon">☕</div>
+                    <h3>Traktir Secangkir Kopi</h3>
+                    <div class="price">Rp 17.000</div>
+                    <button class="btn-tier">Pilih Ini</button>
+                </div>
 
-<script>
-  document.querySelectorAll('.faq-q').forEach(function(btn){
-    btn.addEventListener('click', function(){
-      var item = btn.parentElement;
-      var answer = item.querySelector('.faq-a');
-      var wasOpen = item.classList.contains('open');
-      document.querySelectorAll('.faq-item').forEach(function(el){
-        el.classList.remove('open');
-        el.querySelector('.faq-a').style.maxHeight = null;
-      });
-      if(!wasOpen){
-        item.classList.add('open');
-        answer.style.maxHeight = answer.scrollHeight + 'px';
-      }
-    });
-  });
-</script>
-<!-- Vercel Web Analytics -->
-<script> window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); }; </script> <script defer src="/_vercel/insights/script.js"></script>
+                <div class="price-card recommended" data-tier="27000"
+                    data-link="http://lynk.id/sekabadigital/wzv07vl5r4dv/checkout">
+                    <div class="badge-recommended">Paling Populer</div>
+                    <div class="tier-icon">🍪</div>
+                    <h3>Traktir Cemilan</h3>
+                    <div class="price">Rp 27.000</div>
+                    <button class="btn-tier">Pilih Ini</button>
+                </div>
+
+                <div class="price-card" data-tier="47000"
+                    data-link="http://lynk.id/sekabadigital/18er0exvx4pw/checkout">
+                    <div class="tier-icon">🍱</div>
+                    <h3>Traktir Sepuasnya</h3>
+                    <div class="price">Rp 47.000</div>
+                    <button class="btn-tier">Pilih Ini</button>
+                </div>
+            </div>
+
+            <!-- Email Capture Form -->
+            <div class="checkout-form" id="checkoutForm" style="display: none;">
+                <h3>Terima Kasih Atas Dukungannya! 🙏</h3>
+                <p style="text-align: justify;">Traktiran Anda sangat berarti bagi kami untuk terus berkarya. Silakan
+                    lanjutkan ke pembayaran, Anda akan diminta mengisi email pada halaman pembayaran agar kami dapat
+                    memberikan Ebook dan link akses grup diskusi. Selesaikan pembayaran Anda (Tier: <strong
+                        id="selectedTier">Rp 0</strong>) di langkah berikutnya!</p>
+                <form id="paymentForm">
+                    <button type="submit" class="btn-primary btn-block">Lanjut ke Pembayaran (QRIS/E-Wallet) 🔒</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq">
+        <div class="container">
+            <h2 class="section-title">Pertanyaan Umum (FAQ)</h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <button class="faq-question">Apakah ebook ini cocok untuk pemula? <span
+                            class="icon">+</span></button>
+                    <div class="faq-answer">
+                        <p>Sangat cocok! Ebook ini dirancang khusus untuk orang awam tanpa latar belakang IT atau
+                            programming sama sekali.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">Bagaimana cara mendapatkan ebooknya setelah bayar? <span
+                            class="icon">+</span></button>
+                    <div class="faq-answer">
+                        <p>Setelah pembayaran berhasil, Anda akan otomatis diarahkan ke halaman ebook.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">Apakah bedanya tier 17k, 27k, dan 47k? <span
+                            class="icon">+</span></button>
+                    <div class="faq-answer">
+                        <p>Tidak ada perbedaan isi sama sekali. Ini adalah sistem "Traktir" bayar seikhlasnya untuk
+                            mengapresiasi pembuat karya. Anda bebas memilih nominal mana saja.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">Grup diskusinya di mana? <span class="icon">+</span></button>
+                    <div class="faq-answer">
+                        <p>Grup diskusi ada di Telegram/WhatsApp. Link untuk bergabung akan diberikan bersamaan dengan
+                            file ebook.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-container">
+            <div class="footer-brand">
+                <h3>Sekaba Digital</h3>
+                <p>Edukasi digital marketing simpel dan aplikatif.</p>
+            </div>
+            <div class="footer-links">
+                <a href="#">Instagram</a>
+                <a href="#">YouTube</a>
+                <a href="#">Kontak Bantuan</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Sekaba Digital. Semua Hak Cipta Dilindungi. Ebook ini tidak untuk disebarluaskan tanpa izin.
+            </p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
+
 </html>
