@@ -134,21 +134,43 @@
     overflow: hidden;
   }
   .carousel {
-    display: flex; gap: 24px; overflow-x: auto; padding: 0 0 40px; cursor: grab;
+    display: flex; gap: 24px; overflow-x: auto; padding: 0 0 40px;
     scroll-snap-type: x mandatory; scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
     scroll-padding: 0;
+    scroll-behavior: smooth;
   }
-  .carousel.is-dragging { cursor: grabbing; scroll-snap-type: none; user-select: none; }
   .carousel::-webkit-scrollbar { display: none; }
-  .carousel-hint {
-    display: none; align-items: center; justify-content: center; gap: 10px;
-    margin: -32px 0 24px; color: var(--text-muted); font-size: 13px;
+
+  /* Navigasi Carousel (Tombol Prev/Next) */
+  .carousel-nav {
+    display: flex; align-items: center; justify-content: center; gap: 16px;
+    margin: -16px 0 24px;
   }
-  .carousel-hint.is-visible { display: flex; }
-  .carousel-hint::before,
-  .carousel-hint::after { content: ''; width: 32px; height: 1px; background: rgba(255,255,255,0.18); }
-  .carousel-hint span { color: var(--primary); font-size: 18px; line-height: 1; }
+  .carousel-nav-btn {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: var(--surface); border: 1px solid rgba(255,255,255,0.1);
+    color: var(--text); display: flex; align-items: center; justify-content: center;
+    font-size: 20px; transition: all 0.25s ease; flex-shrink: 0;
+  }
+  .carousel-nav-btn:hover:not(:disabled) {
+    background: var(--primary); color: #0F0E17; border-color: var(--primary);
+    transform: translateY(-2px);
+  }
+  .carousel-nav-btn:disabled {
+    opacity: 0.35; cursor: not-allowed;
+  }
+  .carousel-dots {
+    display: flex; align-items: center; gap: 8px;
+  }
+  .carousel-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: rgba(255,255,255,0.2); transition: all 0.25s ease;
+  }
+  .carousel-dot.active { background: var(--primary); width: 24px; border-radius: 100px; }
+  @media (max-width: 600px) {
+    .carousel-nav-btn { width: 42px; height: 42px; font-size: 18px; }
+  }
   
   .ebook-card {
     flex: 0 0 calc((100% - 48px) / 3);
@@ -287,11 +309,7 @@
   </div>
   
   <div class="carousel-wrapper">
-    <div class="carousel-hint" id="carouselHint" aria-live="polite">
-      <span aria-hidden="true">↔</span>
-      Geser untuk melihat katalog lainnya
-    </div>
-    <div class="carousel reveal">
+    <div class="carousel reveal" id="ebookCarousel">
       
       <!-- Card 1 -->
       <div class="ebook-card">
@@ -330,6 +348,12 @@
       </div>
       
       </div>
+
+    <div class="carousel-nav">
+      <button class="carousel-nav-btn" id="carouselPrev" aria-label="Sebelumnya" type="button">&#8592;</button>
+      <div class="carousel-dots" id="carouselDots"></div>
+      <button class="carousel-nav-btn" id="carouselNext" aria-label="Selanjutnya" type="button">&#8594;</button>
+    </div>
   </div>
 </section>
 
@@ -396,66 +420,67 @@
   
   typedText.style.transition = "opacity 0.5s ease";
 
-  // Geser katalog ebook dengan mouse atau sentuhan (FIXED: klik link tetap berfungsi)
-  const ebookCarousel = document.querySelector('.carousel');
-  const carouselHint = document.getElementById('carouselHint');
-  const ebookCards = ebookCarousel.querySelectorAll('.ebook-card');
-  let isDragging = false;
-  let pointerDownX = 0;
-  let dragStartX = 0;
-  let dragStartScrollLeft = 0;
-  const DRAG_THRESHOLD = 8; // px, di bawah ini dianggap klik biasa, bukan geser
+  // Navigasi katalog ebook dengan tombol Prev/Next (tanpa drag, link 100% berfungsi normal)
+  const ebookCarousel = document.getElementById('ebookCarousel');
+  const ebookCards = Array.from(ebookCarousel.querySelectorAll('.ebook-card'));
+  const prevBtn = document.getElementById('carouselPrev');
+  const nextBtn = document.getElementById('carouselNext');
+  const dotsWrap = document.getElementById('carouselDots');
 
-  const updateCarouselHint = () => {
-    const hasMoreThanThreeCards = ebookCards.length > 3;
-    const canScroll = ebookCarousel.scrollWidth > ebookCarousel.clientWidth + 8;
-    carouselHint.classList.toggle('is-visible', hasMoreThanThreeCards && canScroll);
+  // Buat dot indikator sejumlah kartu
+  ebookCards.forEach((_, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'carousel-dot';
+    dot.addEventListener('click', () => scrollToCard(i));
+    dotsWrap.appendChild(dot);
+  });
+  const dots = Array.from(dotsWrap.children);
+
+  // Hitung jarak geser: lebar 1 kartu + gap, disesuaikan otomatis ke ukuran layar
+  const getStep = () => {
+    if (!ebookCards.length) return 0;
+    const cardRect = ebookCards[0].getBoundingClientRect();
+    const gap = 24; // sesuai CSS "gap: 24px" pada .carousel
+    return cardRect.width + gap;
   };
 
-  ebookCarousel.addEventListener('pointerdown', (event) => {
-    // Jangan mulai drag kalau yang ditekan adalah link/tombol di dalam card
-    pointerDownX = event.clientX;
-    dragStartX = event.clientX;
-    dragStartScrollLeft = ebookCarousel.scrollLeft;
-    ebookCarousel.setPointerCapture(event.pointerId);
-  });
-
-  ebookCarousel.addEventListener('pointermove', (event) => {
-    if (event.buttons !== 1) return;
-    const distance = Math.abs(event.clientX - pointerDownX);
-    if (!isDragging && distance > DRAG_THRESHOLD) {
-      isDragging = true;
-      ebookCarousel.classList.add('is-dragging');
-    }
-    if (isDragging) {
-      ebookCarousel.scrollLeft = dragStartScrollLeft - (event.clientX - dragStartX);
-    }
-  });
-
-  const stopDragging = (event) => {
-    ebookCarousel.classList.remove('is-dragging');
-    if (event.pointerId !== undefined && ebookCarousel.hasPointerCapture(event.pointerId)) {
-      ebookCarousel.releasePointerCapture(event.pointerId);
-    }
-    // Reset isDragging sedikit ditunda, supaya listener 'click' di bawah masih sempat membaca nilainya
-    setTimeout(() => { isDragging = false; }, 0);
+  const getActiveIndex = () => {
+    const step = getStep();
+    if (!step) return 0;
+    return Math.round(ebookCarousel.scrollLeft / step);
   };
 
-  ebookCarousel.addEventListener('pointerup', stopDragging);
-  ebookCarousel.addEventListener('pointercancel', stopDragging);
-  ebookCarousel.addEventListener('pointerleave', stopDragging);
+  const updateNavState = () => {
+    const maxScroll = ebookCarousel.scrollWidth - ebookCarousel.clientWidth - 4;
+    prevBtn.disabled = ebookCarousel.scrollLeft <= 4;
+    nextBtn.disabled = ebookCarousel.scrollLeft >= maxScroll;
 
-  // Kalau memang sedang drag/geser, batalkan klik ke link supaya tidak accidental-navigate
-  ebookCarousel.addEventListener('click', (event) => {
-    if (isDragging) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-  }, true);
+    const activeIndex = getActiveIndex();
+    dots.forEach((dot, i) => dot.classList.toggle('active', i === activeIndex));
 
-  ebookCarousel.addEventListener('scroll', updateCarouselHint, { passive: true });
-  window.addEventListener('resize', updateCarouselHint);
-  updateCarouselHint();
+    // Sembunyikan navigasi kalau semua kartu sudah muat di layar (tidak perlu geser)
+    const needsNav = ebookCarousel.scrollWidth > ebookCarousel.clientWidth + 8;
+    document.querySelector('.carousel-nav').style.display = needsNav ? 'flex' : 'none';
+  };
+
+  function scrollToCard(index) {
+    const step = getStep();
+    ebookCarousel.scrollTo({ left: step * index, behavior: 'smooth' });
+  }
+
+  prevBtn.addEventListener('click', () => {
+    const step = getStep();
+    ebookCarousel.scrollBy({ left: -step, behavior: 'smooth' });
+  });
+
+  nextBtn.addEventListener('click', () => {
+    const step = getStep();
+    ebookCarousel.scrollBy({ left: step, behavior: 'smooth' });
+  });
+
+  ebookCarousel.addEventListener('scroll', updateNavState, { passive: true });
+  window.addEventListener('resize', updateNavState);
+  updateNavState();
 
   // Animasi Scroll Reveal
   const reveals = document.querySelectorAll('.reveal');
