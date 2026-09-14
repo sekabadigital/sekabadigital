@@ -187,6 +187,7 @@
     width: 100%; padding: 14px; background: var(--surface-light); color: #fff;
     border-radius: 12px; font-weight: 600; transition: all 0.3s;
     text-align: center; display: inline-block;
+    position: relative; z-index: 2;
   }
   .ebook-card:hover .btn-full { background: var(--primary); color: #0F0E17; }
 
@@ -395,65 +396,66 @@
   
   typedText.style.transition = "opacity 0.5s ease";
 
-  // Geser katalog ebook dengan mouse atau sentuhan
-const ebookCarousel = document.querySelector('.carousel');
-const carouselHint = document.getElementById('carouselHint');
-const ebookCards = ebookCarousel.querySelectorAll('.ebook-card');
-let isDragging = false;
-let dragStartX = 0;
-let dragStartScrollLeft = 0;
-let pointerDownX = 0;
-const DRAG_THRESHOLD = 6; // px, di bawah ini dianggap click biasa
+  // Geser katalog ebook dengan mouse atau sentuhan (FIXED: klik link tetap berfungsi)
+  const ebookCarousel = document.querySelector('.carousel');
+  const carouselHint = document.getElementById('carouselHint');
+  const ebookCards = ebookCarousel.querySelectorAll('.ebook-card');
+  let isDragging = false;
+  let pointerDownX = 0;
+  let dragStartX = 0;
+  let dragStartScrollLeft = 0;
+  const DRAG_THRESHOLD = 8; // px, di bawah ini dianggap klik biasa, bukan geser
 
-const updateCarouselHint = () => {
-  const hasMoreThanThreeCards = ebookCards.length > 3;
-  const canScroll = ebookCarousel.scrollWidth > ebookCarousel.clientWidth + 8;
-  carouselHint.classList.toggle('is-visible', hasMoreThanThreeCards && canScroll);
-};
+  const updateCarouselHint = () => {
+    const hasMoreThanThreeCards = ebookCards.length > 3;
+    const canScroll = ebookCarousel.scrollWidth > ebookCarousel.clientWidth + 8;
+    carouselHint.classList.toggle('is-visible', hasMoreThanThreeCards && canScroll);
+  };
 
-ebookCarousel.addEventListener('pointerdown', (event) => {
-  pointerDownX = event.clientX;
-  dragStartX = event.clientX;
-  dragStartScrollLeft = ebookCarousel.scrollLeft;
-  ebookCarousel.setPointerCapture(event.pointerId);
-  // isDragging BELUM diset true di sini
-});
+  ebookCarousel.addEventListener('pointerdown', (event) => {
+    // Jangan mulai drag kalau yang ditekan adalah link/tombol di dalam card
+    pointerDownX = event.clientX;
+    dragStartX = event.clientX;
+    dragStartScrollLeft = ebookCarousel.scrollLeft;
+    ebookCarousel.setPointerCapture(event.pointerId);
+  });
 
-ebookCarousel.addEventListener('pointermove', (event) => {
-  if (event.buttons !== 1) return; // pastikan tombol mouse masih ditekan
-  const distance = Math.abs(event.clientX - pointerDownX);
-  if (!isDragging && distance > DRAG_THRESHOLD) {
-    isDragging = true;
-    ebookCarousel.classList.add('is-dragging');
-  }
-  if (isDragging) {
-    ebookCarousel.scrollLeft = dragStartScrollLeft - (event.clientX - dragStartX);
-  }
-});
+  ebookCarousel.addEventListener('pointermove', (event) => {
+    if (event.buttons !== 1) return;
+    const distance = Math.abs(event.clientX - pointerDownX);
+    if (!isDragging && distance > DRAG_THRESHOLD) {
+      isDragging = true;
+      ebookCarousel.classList.add('is-dragging');
+    }
+    if (isDragging) {
+      ebookCarousel.scrollLeft = dragStartScrollLeft - (event.clientX - dragStartX);
+    }
+  });
 
-const stopDragging = (event) => {
-  ebookCarousel.classList.remove('is-dragging');
-  if (event.pointerId !== undefined && ebookCarousel.hasPointerCapture(event.pointerId)) {
-    ebookCarousel.releasePointerCapture(event.pointerId);
-  }
-  // reset isDragging sedikit ditunda supaya click handler (di bawah) sempat cek nilainya
-  setTimeout(() => { isDragging = false; }, 0);
-};
+  const stopDragging = (event) => {
+    ebookCarousel.classList.remove('is-dragging');
+    if (event.pointerId !== undefined && ebookCarousel.hasPointerCapture(event.pointerId)) {
+      ebookCarousel.releasePointerCapture(event.pointerId);
+    }
+    // Reset isDragging sedikit ditunda, supaya listener 'click' di bawah masih sempat membaca nilainya
+    setTimeout(() => { isDragging = false; }, 0);
+  };
 
-ebookCarousel.addEventListener('pointerup', stopDragging);
-ebookCarousel.addEventListener('pointercancel', stopDragging);
+  ebookCarousel.addEventListener('pointerup', stopDragging);
+  ebookCarousel.addEventListener('pointercancel', stopDragging);
+  ebookCarousel.addEventListener('pointerleave', stopDragging);
 
-// Cegah klik pada link dianggap trigger jika memang sedang drag
-ebookCarousel.addEventListener('click', (event) => {
-  if (isDragging) {
-    event.preventDefault();
-    event.stopPropagation();
-  }
-}, true);
+  // Kalau memang sedang drag/geser, batalkan klik ke link supaya tidak accidental-navigate
+  ebookCarousel.addEventListener('click', (event) => {
+    if (isDragging) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  }, true);
 
-ebookCarousel.addEventListener('scroll', updateCarouselHint, { passive: true });
-window.addEventListener('resize', updateCarouselHint);
-updateCarouselHint();
+  ebookCarousel.addEventListener('scroll', updateCarouselHint, { passive: true });
+  window.addEventListener('resize', updateCarouselHint);
+  updateCarouselHint();
 
   // Animasi Scroll Reveal
   const reveals = document.querySelectorAll('.reveal');
