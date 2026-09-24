@@ -1,504 +1,933 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sekaba Digital - Ebook & Jasa Landing Page</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #0F0E17;
-    --surface: #1B1924;
-    --surface-light: #2A2739;
-    --text: #FFFFFE;
-    --text-muted: #A7A9BE;
-    --primary: #FF8906; /* Neon Orange */
-    --primary-hover: #F25F4C;
-    --secondary: #E53170; /* Pinkish Red */
-    --tertiary: #7F5AF0; /* Purple */
-    --radius-lg: 24px;
-    --radius-md: 16px;
-    --font-head: 'Space Grotesk', sans-serif;
-    --font-body: 'Plus Jakarta Sans', sans-serif;
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sekaba Digital</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0F0E17;
+            --surface: #1B1924;
+            --surface-light: #2A2739;
+            --text: #FFFFFE;
+            --text-muted: #A7A9BE;
+            --primary: #FF8906;
+            /* Neon Orange */
+            --primary-hover: #F25F4C;
+            --secondary: #E53170;
+            /* Pinkish Red */
+            --tertiary: #7F5AF0;
+            /* Purple */
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --font-head: 'Space Grotesk', sans-serif;
+            --font-body: 'Plus Jakarta Sans', sans-serif;
+        }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--font-body);
-    line-height: 1.6;
-    -webkit-overflow-scrolling: touch;
-  }
-  
-  a { text-decoration: none; color: inherit; }
-  img { max-width: 100%; display: block; }
-  button { cursor: pointer; border: none; background: none; font-family: inherit; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-  /* Utility Classes */
-  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
-  .text-gradient {
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-  
-  /* Animasi Scroll Reveal */
-  .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
-  .reveal.active { opacity: 1; transform: translateY(0); }
+        html {
+            scroll-behavior: smooth;
+        }
 
-  /* Navbar */
-  .navbar {
-    position: fixed; top: 0; width: 100%; z-index: 100;
-    background: rgba(15, 14, 23, 0.8);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-    transition: all 0.3s ease;
-  }
-  .nav-content { display: flex; justify-content: center; align-items: center; height: 70px; position: relative; }
-  .logo { font-family: var(--font-head); font-size: 24px; font-weight: 700; }
-  .nav-content .logo { position: absolute; left: 24px; }
-  .logo span { color: var(--primary); }
-  .nav-links { display: flex; gap: 32px; font-weight: 500; font-size: 15px; }
-  .nav-links a { color: var(--text-muted); transition: color 0.3s; }
-  .nav-links a:hover { color: var(--text); }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            -webkit-overflow-scrolling: touch;
+        }
 
-  /* Hero Section */
-  .hero {
-    min-height: 100vh; display: flex; align-items: center; position: relative;
-    padding-top: 70px; overflow: hidden;
-  }
-  /* Blobs Animasi Background */
-  .blob {
-    position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.4; z-index: -1;
-    animation: float 10s infinite ease-in-out alternate;
-  }
-  .blob-1 { width: 400px; height: 400px; background: var(--tertiary); top: -100px; left: -100px; }
-  .blob-2 { width: 300px; height: 300px; background: var(--primary); bottom: -50px; right: -50px; animation-delay: -5s; }
-  
-  @keyframes float {
-    0% { transform: translate(0, 0) scale(1); }
-    100% { transform: translate(30px, 50px) scale(1.1); }
-  }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
 
-  .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
-  .hero-content h1 {
-    font-family: var(--font-head); font-size: clamp(40px, 5vw, 64px);
-    line-height: 1.1; margin-bottom: 24px;
-  }
-  .dynamic-text { display: inline-block; min-width: 200px; border-bottom: 4px solid var(--primary); }
-  .hero-content p { font-size: 18px; color: var(--text-muted); margin-bottom: 40px; max-width: 480px; }
-  .hero-btns { display: flex; gap: 16px; }
-  .btn-lg {
-    padding: 16px 32px; border-radius: 100px; font-family: var(--font-head);
-    font-size: 16px; font-weight: 700; transition: all 0.3s ease;
-  }
-  .btn-primary { background: var(--primary); color: #0F0E17; }
-  .btn-primary:hover { background: #fff; transform: translateY(-3px); box-shadow: 0 10px 25px rgba(255, 137, 6, 0.5); }
-  .btn-outline { border: 2px solid rgba(255,255,255,0.2); color: #fff; }
-  .btn-outline:hover { border-color: #fff; background: rgba(255,255,255,0.05); }
+        img {
+            max-width: 100%;
+            display: block;
+        }
 
-  .hero-visual { position: relative; }
-  .floating-card {
-    background: rgba(27, 25, 36, 0.6); backdrop-filter: blur(16px);
-    border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius-lg);
-    padding: 24px; animation: floatY 6s infinite ease-in-out;
-    box-shadow: 0 30px 60px rgba(0,0,0,0.5);
-  }
-  @keyframes floatY {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-20px); }
-  }
-  .fc-header { display: flex; gap: 12px; margin-bottom: 16px; align-items: center; }
-  .fc-dot { width: 12px; height: 12px; border-radius: 50%; background: #ff5f56; }
-  .fc-dot:nth-child(2) { background: #ffbd2e; }
-  .fc-dot:nth-child(3) { background: #27c93f; }
-  .fc-img { width: 100%; border-radius: var(--radius-md); margin-bottom: 16px; }
+        button {
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-family: inherit;
+        }
 
-  /* Ebook Section */
-  .section { padding: 100px 0; }
-  .section-head { text-align: center; margin-bottom: 60px; }
-  .section-head h2 { font-family: var(--font-head); font-size: clamp(32px, 4vw, 48px); margin-bottom: 16px; }
-  .section-head p { color: var(--text-muted); font-size: 18px; max-width: 600px; margin: 0 auto; }
+        /* Utility Classes */
+        .wrap {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
 
-  /* Carousel */
-  .carousel-wrapper {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 24px;
-    overflow: hidden;
-  }
-  .carousel {
-    display: flex; gap: 24px; overflow-x: auto; padding: 0 0 40px;
-    scroll-snap-type: x mandatory; scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-    scroll-padding: 0;
-    scroll-behavior: smooth;
-  }
-  .carousel::-webkit-scrollbar { display: none; }
+        .text-gradient {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-  /* Navigasi Carousel (Tombol Prev/Next) */
-  .carousel-nav {
-    display: flex; align-items: center; justify-content: center; gap: 16px;
-    margin: -16px 0 24px;
-  }
-  .carousel-nav-btn {
-    width: 48px; height: 48px; border-radius: 50%;
-    background: var(--surface); border: 1px solid rgba(255,255,255,0.1);
-    color: var(--text); display: flex; align-items: center; justify-content: center;
-    font-size: 20px; transition: all 0.25s ease; flex-shrink: 0;
-  }
-  .carousel-nav-btn:hover:not(:disabled) {
-    background: var(--primary); color: #0F0E17; border-color: var(--primary);
-    transform: translateY(-2px);
-  }
-  .carousel-nav-btn:disabled {
-    opacity: 0.35; cursor: not-allowed;
-  }
-  .carousel-dots {
-    display: flex; align-items: center; gap: 8px;
-  }
-  .carousel-dot {
-    width: 8px; height: 8px; border-radius: 50%;
-    background: rgba(255,255,255,0.2); transition: all 0.25s ease;
-  }
-  .carousel-dot.active { background: var(--primary); width: 24px; border-radius: 100px; }
-  @media (max-width: 600px) {
-    .carousel-nav-btn { width: 42px; height: 42px; font-size: 18px; }
-  }
-  
-  .ebook-card {
-    flex: 0 0 calc((100% - 48px) / 3);
-    background: var(--surface); border: 1px solid rgba(255,255,255,0.05);
-    border-radius: var(--radius-lg); padding: 24px; scroll-snap-align: start;
-    transition: all 0.4s ease; position: relative; overflow: hidden;
-    display: flex; flex-direction: column;
-  }
-  .ebook-card::before {
-    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    background: radial-gradient(circle at top right, rgba(255, 137, 6, 0.1), transparent 50%);
-    opacity: 0; transition: opacity 0.4s ease; z-index: 0;
-  }
-  .ebook-card:hover {
-    transform: translateY(-10px); border-color: rgba(255, 137, 6, 0.3);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-  }
-  .ebook-card:hover::before { opacity: 1; }
-  
-  .ec-img {
-    width: 100%; aspect-ratio: 4/5; border-radius: var(--radius-md);
-    object-fit: cover; margin-bottom: 24px; position: relative; z-index: 1;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-  }
-  .ec-content { position: relative; z-index: 1; display: flex; flex-direction: column; flex: 1; }
-  .ec-tag {
-    align-self: flex-start;
-    display: inline-block; padding: 6px 12px; background: rgba(255, 137, 6, 0.1);
-    color: var(--primary); border-radius: 100px; font-size: 12px; font-weight: 700;
-    margin-bottom: 12px;
-  }
-  .ec-title { font-family: var(--font-head); font-size: 20px; margin-bottom: 12px; line-height: 1.3;}
-  .ec-desc { color: var(--text-muted); margin-bottom: 16px; font-size: 14px; flex: 1; }
-  .ec-price { font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 20px; }
-  .btn-full {
-    width: 100%; padding: 14px; background: var(--surface-light); color: #fff;
-    border-radius: 12px; font-weight: 600; transition: all 0.3s;
-    text-align: center; display: inline-block;
-    position: relative; z-index: 2;
-  }
-  .ebook-card:hover .btn-full { background: var(--primary); color: #0F0E17; }
+        /* Animasi Scroll Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
 
-  /* Jasa Landing Page */
-  .service-section { background: var(--surface); position: relative; overflow: hidden; margin-top: 40px; }
-  .service-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
-  .service-list { list-style: none; margin: 32px 0; }
-  .service-list li {
-    display: flex; gap: 16px; align-items: flex-start; margin-bottom: 20px; font-size: 16px;
-  }
-  .check-icon {
-    width: 28px; height: 28px; border-radius: 50%; background: rgba(127, 90, 240, 0.2);
-    color: var(--tertiary); display: flex; align-items: center; justify-content: center;
-    font-weight: bold; flex-shrink: 0;
-  }
-  .price-box {
-    background: var(--bg); border: 1px solid rgba(255,255,255,0.05);
-    padding: 40px; border-radius: var(--radius-lg); text-align: center;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.3); position: relative;
-  }
-  .price-box::after {
-    content: ''; position: absolute; inset: -2px; border-radius: var(--radius-lg);
-    background: linear-gradient(135deg, var(--primary), var(--tertiary));
-    z-index: -1; opacity: 0.5; filter: blur(10px);
-  }
-  .pb-title { font-size: 18px; color: var(--text-muted); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 2px;}
-  .pb-price { font-family: var(--font-head); font-size: 48px; font-weight: 700; margin-bottom: 8px; }
-  .pb-price span { font-size: 20px; color: var(--text-muted); }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-  /* Footer */
-  footer { border-top: 1px solid rgba(255,255,255,0.05); padding: 40px 0; text-align: center; color: var(--text-muted); }
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            background: rgba(15, 14, 23, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
 
-  /* Responsive */
-  @media (max-width: 968px) {
-    .hero-grid, .service-grid { grid-template-columns: 1fr; }
-    .hero { text-align: center; padding-top: 120px; }
-    .hero-content p { margin: 0 auto 40px; }
-    .hero-btns { justify-content: center; }
-    .nav-links { gap: 20px; }
-  }
-  @media (max-width: 600px) {
-    .nav-content { height: 62px; }
-    .nav-content .logo { left: 16px; font-size: 19px; }
-    .nav-links { gap: 12px; font-size: 11px; }
-    /* Lebar kartu di HP agar tidak memenuhi layar sepenuhnya (memberi hint bahwa bisa digeser) */
-    .ebook-card { flex: 0 0 82%; }
-  }
-</style>
+        .nav-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 70px;
+            position: relative;
+        }
+
+        .logo {
+            font-family: var(--font-head);
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .nav-content .logo {
+            position: absolute;
+            left: 24px;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            font-weight: 500;
+            font-size: 15px;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding-top: 70px;
+            overflow: hidden;
+        }
+
+        /* Blobs Animasi Background */
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            z-index: -1;
+            animation: float 10s infinite ease-in-out alternate;
+        }
+
+        .blob-1 {
+            width: 400px;
+            height: 400px;
+            background: var(--tertiary);
+            top: -100px;
+            left: -100px;
+        }
+
+        .blob-2 {
+            width: 300px;
+            height: 300px;
+            background: var(--primary);
+            bottom: -50px;
+            right: -50px;
+            animation-delay: -5s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            100% {
+                transform: translate(30px, 50px) scale(1.1);
+            }
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-family: var(--font-head);
+            font-size: clamp(40px, 5vw, 64px);
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+
+        .dynamic-text {
+            display: inline-block;
+            min-width: 200px;
+            border-bottom: 4px solid var(--primary);
+        }
+
+        .hero-content p {
+            font-size: 18px;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            max-width: 480px;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 16px;
+        }
+
+        .btn-lg {
+            padding: 16px 32px;
+            border-radius: 100px;
+            font-family: var(--font-head);
+            font-size: 16px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #0F0E17;
+        }
+
+        .btn-primary:hover {
+            background: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 137, 6, 0.5);
+        }
+
+        .btn-outline {
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+
+        .btn-outline:hover {
+            border-color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .hero-visual {
+            position: relative;
+        }
+
+        .floating-card {
+            background: rgba(27, 25, 36, 0.6);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            animation: floatY 6s infinite ease-in-out;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        @keyframes floatY {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .fc-header {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+            align-items: center;
+        }
+
+        .fc-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ff5f56;
+        }
+
+        .fc-dot:nth-child(2) {
+            background: #ffbd2e;
+        }
+
+        .fc-dot:nth-child(3) {
+            background: #27c93f;
+        }
+
+        .fc-img {
+            width: 100%;
+            border-radius: var(--radius-md);
+            margin-bottom: 16px;
+        }
+
+        /* Ebook Section */
+        .section {
+            padding: 100px 0;
+        }
+
+        .section-head {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-head h2 {
+            font-family: var(--font-head);
+            font-size: clamp(32px, 4vw, 48px);
+            margin-bottom: 16px;
+        }
+
+        .section-head p {
+            color: var(--text-muted);
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Carousel */
+        .carousel-wrapper {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            overflow: hidden;
+        }
+
+        .carousel {
+            display: flex;
+            gap: 24px;
+            overflow-x: auto;
+            padding: 0 0 40px;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
+            scroll-padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        .carousel::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Navigasi Carousel (Tombol Prev/Next) */
+        .carousel-nav {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin: -16px 0 24px;
+        }
+
+        .carousel-nav-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--surface);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: all 0.25s ease;
+            flex-shrink: 0;
+        }
+
+        .carousel-nav-btn:hover:not(:disabled) {
+            background: var(--primary);
+            color: #0F0E17;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .carousel-nav-btn:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+        }
+
+        .carousel-dots {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .carousel-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: all 0.25s ease;
+        }
+
+        .carousel-dot.active {
+            background: var(--primary);
+            width: 24px;
+            border-radius: 100px;
+        }
+
+        @media (max-width: 600px) {
+            .carousel-nav-btn {
+                width: 42px;
+                height: 42px;
+                font-size: 18px;
+            }
+        }
+
+        .ebook-card {
+            flex: 0 0 calc((100% - 48px) / 3);
+            background: var(--surface);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            scroll-snap-align: start;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .ebook-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top right, rgba(255, 137, 6, 0.1), transparent 50%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 0;
+        }
+
+        .ebook-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 137, 6, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .ebook-card:hover::before {
+            opacity: 1;
+        }
+
+        .ec-img {
+            width: 100%;
+            aspect-ratio: 4/5;
+            border-radius: var(--radius-md);
+            object-fit: cover;
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .ec-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .ec-tag {
+            align-self: flex-start;
+            display: inline-block;
+            padding: 6px 12px;
+            background: rgba(255, 137, 6, 0.1);
+            color: var(--primary);
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .ec-title {
+            font-family: var(--font-head);
+            font-size: 20px;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .ec-desc {
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            font-size: 14px;
+            flex: 1;
+        }
+
+        .ec-price {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 20px;
+        }
+
+        .btn-full {
+            width: 100%;
+            padding: 14px;
+            background: var(--surface-light);
+            color: #fff;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-align: center;
+            display: inline-block;
+            position: relative;
+            z-index: 2;
+        }
+
+        .ebook-card:hover .btn-full {
+            background: var(--primary);
+            color: #0F0E17;
+        }
+
+        /* Jasa Landing Page */
+        .service-section {
+            background: var(--surface);
+            position: relative;
+            overflow: hidden;
+            margin-top: 40px;
+        }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .service-list {
+            list-style: none;
+            margin: 32px 0;
+        }
+
+        .service-list li {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        .check-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(127, 90, 240, 0.2);
+            color: var(--tertiary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .price-box {
+            background: var(--bg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: var(--radius-lg);
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .price-box::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: var(--radius-lg);
+            background: linear-gradient(135deg, var(--primary), var(--tertiary));
+            z-index: -1;
+            opacity: 0.5;
+            filter: blur(10px);
+        }
+
+        .pb-title {
+            font-size: 18px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .pb-price {
+            font-family: var(--font-head);
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .pb-price span {
+            font-size: 20px;
+            color: var(--text-muted);
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 40px 0;
+            text-align: center;
+            color: var(--text-muted);
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+
+            .hero-grid,
+            .service-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                text-align: center;
+                padding-top: 120px;
+            }
+
+            .hero-content p {
+                margin: 0 auto 40px;
+            }
+
+            .hero-btns {
+                justify-content: center;
+            }
+
+            .nav-links {
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .nav-content {
+                height: 62px;
+            }
+
+            .nav-content .logo {
+                left: 16px;
+                font-size: 19px;
+            }
+
+            .nav-links {
+                gap: 12px;
+                font-size: 11px;
+            }
+
+            /* Lebar kartu di HP agar tidak memenuhi layar sepenuhnya (memberi hint bahwa bisa digeser) */
+            .ebook-card {
+                flex: 0 0 82%;
+            }
+        }
+    </style>
 </head>
+
 <body>
 
-<!-- Navbar -->
-<nav class="navbar">
-  <div class="wrap nav-content">
-    <div class="logo">Sekaba<span>.</span></div>
-    <div class="nav-links">
-      <a href="#ebook">Karya Ebook</a>
-      <a href="#jasa">Jasa Landing Page</a>
-    </div>
-  </div>
-</nav>
-
-<!-- Hero Section -->
-<section class="hero">
-  <div class="blob blob-1"></div>
-  <div class="blob blob-2"></div>
-  <div class="wrap hero-grid">
-    <div class="hero-content reveal">
-      <h1>Bikin <span class="dynamic-text text-gradient" id="typed-text">Mimpimu</span><br>Jadi Nyata.</h1>
-      <p>Semua senjata buat menang di dunia digital ada di sini. Pilih panduan step-by-step untuk upgrade skill-mu, atau serahkan urusan bikin landing page ke tim kami. Fokus jualan, bebas pusing..</p>
-      <div class="hero-btns">
-        <a href="#ebook" class="btn-lg btn-primary">Lihat Produk</a>
-        <a href="#jasa" class="btn-lg btn-outline">Jasa Web</a>
-      </div>
-    </div>
-    <div class="hero-visual reveal">
-      <div class="floating-card">
-        <div class="fc-header">
-          <div class="fc-dot"></div><div class="fc-dot"></div><div class="fc-dot"></div>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="wrap nav-content">
+            <div class="logo">Sekaba<span>Digital</span></div>
+            <div class="nav-links">
+                <a href="#ebook">Karya Ebook</a>
+                <a href="#jasa">Jasa Landing Page</a>
+            </div>
         </div>
-        <!-- Gambar Ilustrasi Abstrak Sementara -->
-        <img src="https://via.placeholder.com/800x500/2A2739/FF8906?text=Preview+Produk+Sekaba" alt="Preview Produk" class="fc-img">
-        <h3 style="font-family: var(--font-head); margin-bottom: 8px;">Omset Naik Drastis 🚀</h3>
-        <p style="color: var(--text-muted); font-size: 14px;">Siap-siap kebanjiran orderan dari internet.</p>
-      </div>
-    </div>
-  </div>
-</section>
+    </nav>
 
-<!-- Katalog Ebook -->
-<section class="section" id="ebook">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <h2>Katalog <span class="text-gradient">Ebook Digital</span></h2>
-      <p>Geser ke samping untuk melihat semua karya kami. Bahasanya santai, gampang dimengerti, dan langsung bisa dipraktikkan hari ini juga.</p>
-    </div>
-  </div>
-  
-  <div class="carousel-wrapper">
-    <div class="carousel reveal" id="ebookCarousel">
-      
-      <!-- Card 1 -->
-      <div class="ebook-card">
-        <span class="ec-tag">Sistem Traktir</span>
-        <img src="https://github.com/sekabadigital/sekabadigital/blob/main/Modal%20HP%20Doang!%20%E2%80%9CBongkar%20Jurus%20Cuan%20Affiliate%20yang%20Bisa%20Kamu%20Coba%20Hari%20Ini%E2%80%9D.png?raw=true" alt="Modal HP Doang" class="ec-img">
-        <div class="ec-content">
-          <h3 class="ec-title">Modal HP Doang! Jurus Cuan Affiliate</h3>
-          <p class="ec-desc">Bongkar rahasia dapet komisi dari Shopee walau cuma rebahan main HP.</p>
-          <div class="ec-price">Bayar Suka-Suka</div>
-          <a href="/cuandarihp.html" class="btn-full" target="_blank">Lihat Detail</a>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="wrap hero-grid">
+            <div class="hero-content reveal">
+                <h1>Bikin <span class="dynamic-text text-gradient" id="typed-text">Mimpimu</span><br>Jadi Nyata.</h1>
+                <p>Semua panduan untuk menambah ilmu ada di sini. Pilih panduan step-by-step untuk upgrade
+                    skill-mu, atau serahkan urusan bikin landing page ke tim kami. Fokus jualan, bebas pusing..</p>
+                <div class="hero-btns">
+                    <a href="#ebook" class="btn-lg btn-primary">Lihat Produk</a>
+                    <a href="#jasa" class="btn-lg btn-outline">Jasa Web</a>
+                </div>
+            </div>
+            <div class="hero-visual reveal">
+                <!-- Gambar Customer -->
+                <img src="https://github.com/sekabadigital/sekabadigital/blob/main/custumer.png?raw=true" alt="Customer"
+                    style="display: block; width: 90%; max-width: none; height: auto; margin-left: auto; transform: scale(1.15) translateX(10%); transform-origin: right center;">
+            </div>
         </div>
-      </div>
+    </section>
 
-      <!-- Card 2 -->
-      <div class="ebook-card">
-        <span class="ec-tag" style="background: rgba(127, 90, 240, 0.1); color: var(--tertiary);">Best Seller</span>
-        <img src="https://github.com/sekabadigital/sekabadigital/blob/main/Disusun%20oleh%20%20Sekaba%20Digital.png?raw=true" alt="Panduan Landing Page Gratis" class="ec-img">
-        <div class="ec-content">
-          <h3 class="ec-title">Membuat Landing Page Gratis</h3>
-          <p class="ec-desc">Panduan membuat landing page dengan bantuan AI, dari ide sampai online tanpa harus jago coding.</p>
-          <div class="ec-price">Bayar Suka-Suka</div>
-          <a href="/landingpage.html" class="btn-full" target="_blank">Lihat Detail</a>
+    <!-- Katalog Ebook -->
+    <section class="section" id="ebook">
+        <div class="wrap">
+            <div class="section-head reveal">
+                <h2>Katalog <span class="text-gradient">Ebook Digital</span></h2>
+                <p>Bahasanya santai, gampang dimengerti, dan langsung
+                    bisa dipraktikkan hari ini juga.</p>
+            </div>
         </div>
-      </div>
-      
-      <!-- Card 3 -->
-      <div class="ebook-card">
-        <span class="ec-tag" style="background: rgba(39, 201, 63, 0.1); color: #27c93f;">Baru Rilis</span>
-        <img src="https://github.com/sekabadigital/sekabadigital/blob/main/Matematika%20Gampang.png?raw=true" alt="Matematika Gampang" class="ec-img">
-        <div class="ec-content">
-          <h3 class="ec-title">Matematika Gampang</h3>
-          <p class="ec-desc">Quick tips perkalian untuk membantu belajar matematika dengan cara yang lebih ringan.</p>
-          <div class="ec-price">Segera Rilis</div>
-          <a href="#" class="btn-full" target="_blank">Lihat Detail</a>
+
+        <div class="carousel-wrapper">
+            <div class="carousel reveal" id="ebookCarousel">
+
+                <!-- Card 1 -->
+                <div class="ebook-card">
+                    <span class="ec-tag">Best Seller</span>
+                    <img src="https://github.com/sekabadigital/sekabadigital/blob/main/Modal%20HP%20Doang!%20%E2%80%9CBongkar%20Jurus%20Cuan%20Affiliate%20yang%20Bisa%20Kamu%20Coba%20Hari%20Ini%E2%80%9D.png?raw=true"
+                        alt="Modal HP Doang" class="ec-img">
+                    <div class="ec-content">
+                        <h3 class="ec-title">Modal HP Doang! Jurus Cuan Affiliate</h3>
+                        <p class="ec-desc">Bongkar rahasia dapet komisi dari Shopee walau cuma rebahan main HP.</p>
+                        <div class="ec-price">Dapatkan Segera</div>
+                        <a href="/cuandarihp.html" class="btn-full" target="_blank">Lihat Detail</a>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="ebook-card">
+                    <span class="ec-tag" style="background: rgba(127, 90, 240, 0.1); color: var(--tertiary);">Best
+                        Seller</span>
+                    <img src="https://github.com/sekabadigital/sekabadigital/blob/main/Disusun%20oleh%20%20Sekaba%20Digital.png?raw=true"
+                        alt="Panduan Landing Page Gratis" class="ec-img">
+                    <div class="ec-content">
+                        <h3 class="ec-title">Membuat Landing Page Gratis</h3>
+                        <p class="ec-desc">Panduan membuat landing page dengan bantuan AI, dari ide sampai online tanpa
+                            harus jago coding.</p>
+                        <div class="ec-price">Dapatkan Segera</div>
+                        <a href="/landingpage.html" class="btn-full" target="_blank">Lihat Detail</a>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="ebook-card">
+                    <span class="ec-tag" style="background: rgba(39, 201, 63, 0.1); color: #27c93f;">Baru Rilis</span>
+                    <img src="https://github.com/sekabadigital/sekabadigital/blob/main/Matematika%20Gampang.png?raw=true"
+                        alt="Matematika Gampang" class="ec-img">
+                    <div class="ec-content">
+                        <h3 class="ec-title">Matematika Gampang</h3>
+                        <p class="ec-desc">Quick tips perkalian untuk membantu belajar matematika dengan cara yang lebih
+                            ringan.</p>
+                        <div class="ec-price">Dapatkan Segera</div>
+                        <a href="/perkaliangampang.html" class="btn-full" target="_blank">Lihat Detail</a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="carousel-nav">
+                <button class="carousel-nav-btn" id="carouselPrev" aria-label="Sebelumnya"
+                    type="button">&#8592;</button>
+                <div class="carousel-dots" id="carouselDots"></div>
+                <button class="carousel-nav-btn" id="carouselNext" aria-label="Selanjutnya"
+                    type="button">&#8594;</button>
+            </div>
         </div>
-      </div>
-      
-      </div>
+    </section>
 
-    <div class="carousel-nav">
-      <button class="carousel-nav-btn" id="carouselPrev" aria-label="Sebelumnya" type="button">&#8592;</button>
-      <div class="carousel-dots" id="carouselDots"></div>
-      <button class="carousel-nav-btn" id="carouselNext" aria-label="Selanjutnya" type="button">&#8594;</button>
-    </div>
-  </div>
-</section>
+    <!-- Jasa Landing Page -->
+    <section class="section service-section" id="jasa">
+        <div class="wrap service-grid">
+            <div class="reveal">
+                <h2>Males Belajar Bikin Web? <br><span class="text-gradient">Sini Kami Buatin!</span></h2>
+                <p style="color: var(--text-muted); font-size: 18px; margin-top: 16px;">
+                    Nggak usah pusing mikirin koding, desain, atau bingung susun kata-kata penawaran. Kamu fokus urus
+                    bisnis dan balas chat pembeli aja, urusan landing page yang bikin jualanmu kelihatan profesional dan
+                    tepercaya, serahin ke Sekaba Digital.
+                </p>
+                <ul class="service-list">
+                    <li>
+                        <div class="check-icon">✓</div>
+                        <div><strong>Landing page 1 halaman (single page) siap pakai.</strong><br><span
+                                style="color:var(--text-muted); font-size:14px;"></span></div>
+                    </li>
+                    <li>
+                        <div class="check-icon">✓</div>
+                        <div><strong>Penulisan copywriting sesuai target pasarmu.</strong><br><span
+                                style="color:var(--text-muted); font-size:14px;"></span></div>
+                    </li>
+                    <li>
+                        <div class="check-icon">✓</div>
+                        <div><strong>Integrasi tombol langsung ke WhatsApp / Payment Gateway.</strong><br><span
+                                style="color:var(--text-muted); font-size:14px;"></span></div>
+                    </li>
+                    <li>
+                        <div class="check-icon">✓</div>
+                        <div><strong>Responsif di HP.</strong><br><span
+                                style="color:var(--text-muted); font-size:14px;"></span></div>
+                    </li>
+                    <li>
+                        <div class="check-icon">✓</div>
+                        <div><strong>Gratis Revisi Sampai Puas.</strong><br><span
+                                style="color:var(--text-muted); font-size:14px;"></span></div>
+                    </li>
+                </ul>
+            </div>
+            <div class="reveal">
+                <div class="price-box">
+                    <div class="pb-title">Paket Reguler</div>
+                    <div class="pb-price">Rp 249.000<span>/web</span></div>
+                    <div class="pb-title">Paket Plus Domain</div>
+                    <div class="pb-price">Rp 399.000<span>/web</span></div>
+                    <p style="color: var(--text-muted); margin-bottom: 32px;">Sekali bayar. Udah bebas pusing, siap
+                        jualan besok!</p>
+                    <button class="btn-lg btn-primary" style="width: 100%;">Konsultasi via WA Gratis!</button>
+                    <p style="font-size: 12px; color: var(--text-muted); margin-top: 16px;">*Slot pengerjaan terbatas
+                        setiap minggunya.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<!-- Jasa Landing Page -->
-<section class="section service-section" id="jasa">
-  <div class="wrap service-grid">
-    <div class="reveal">
-      <h2>Males Belajar Bikin Web? <br><span class="text-gradient">Sini Kami Buatin!</span></h2>
-      <p style="color: var(--text-muted); font-size: 18px; margin-top: 16px;">
-        Fokus urusin bisnis dan balas chat pelanggan aja. Urusan tampilan web yang bikin orang pengen beli, serahin ke tim Sekaba Digital.
-      </p>
-      <ul class="service-list">
-        <li>
-          <div class="check-icon">✓</div>
-          <div><strong>Desain Menarik & Estetik</strong><br><span style="color:var(--text-muted); font-size:14px;">Nggak malu-maluin buat dipamerin ke calon pembeli.</span></div>
-        </li>
-        <li>
-          <div class="check-icon">✓</div>
-          <div><strong>Loading Ngebut</strong><br><span style="color:var(--text-muted); font-size:14px;">Pembeli nggak kabur gara-gara nunggu web muter-muter kelamaan.</span></div>
-        </li>
-        <li>
-          <div class="check-icon">✓</div>
-          <div><strong>Teks (Copywriting) Dibuatin</strong><br><span style="color:var(--text-muted); font-size:14px;">Kata-katanya diracik khusus biar pembeli gatal pengen klik tombol beli.</span></div>
-        </li>
-      </ul>
-    </div>
-    <div class="reveal">
-      <div class="price-box">
-        <div class="pb-title">Paket Terima Beres</div>
-        <div class="pb-price">Rp 349.000<span>/web</span></div>
-        <p style="color: var(--text-muted); margin-bottom: 32px;">Sekali bayar. Udah bebas pusing, siap jualan besok!</p>
-        <button class="btn-lg btn-primary" style="width: 100%;">Konsultasi via WA Gratis!</button>
-        <p style="font-size: 12px; color: var(--text-muted); margin-top: 16px;">*Slot pengerjaan terbatas setiap minggunya.</p>
-      </div>
-    </div>
-  </div>
-</section>
+    <!-- Footer -->
+    <footer>
+        <div class="wrap">
+            <h2 style="font-family: var(--font-head); margin-bottom: 16px;">Sekaba<span
+                    style="color: var(--primary);">Digital</span></h2>
+            <p>Membantu pemula dan UMKM Indonesia naik kelas lewat jalur digital.</p>
+            <div style="margin-top: 24px; font-size: 14px;">
+                &copy; 2026 Sekaba Digital. All rights reserved.
+            </div>
+        </div>
+    </footer>
 
-<!-- Footer -->
-<footer>
-  <div class="wrap">
-    <h2 style="font-family: var(--font-head); margin-bottom: 16px;">Sekaba<span style="color: var(--primary);">.</span></h2>
-    <p>Membantu pemula dan UMKM Indonesia naik kelas lewat jalur digital.</p>
-    <div style="margin-top: 24px; font-size: 14px;">
-      &copy; 2026 Sekaba Digital. All rights reserved.
-    </div>
-  </div>
-</footer>
+    <script>
+        // Efek Typing Dinamis pada Hero
+        const textArray = ["Bisnismu", "Jualanmu", "Idemu", "Karyamu"];
+        let textIndex = 0;
+        const typedText = document.getElementById("typed-text");
 
-<script>
-  // Efek Typing Dinamis pada Hero
-  const textArray = ["Bisnismu", "Jualanmu", "Idemu", "Karyamu"];
-  let textIndex = 0;
-  const typedText = document.getElementById("typed-text");
-  
-  setInterval(() => {
-    typedText.style.opacity = 0;
-    setTimeout(() => {
-      textIndex = (textIndex + 1) % textArray.length;
-      typedText.innerText = textArray[textIndex];
-      typedText.style.opacity = 1;
-    }, 500); // Waktu jeda transisi
-  }, 3000); // Ganti kata setiap 3 detik
-  
-  typedText.style.transition = "opacity 0.5s ease";
+        setInterval(() => {
+            typedText.style.opacity = 0;
+            setTimeout(() => {
+                textIndex = (textIndex + 1) % textArray.length;
+                typedText.innerText = textArray[textIndex];
+                typedText.style.opacity = 1;
+            }, 500); // Waktu jeda transisi
+        }, 3000); // Ganti kata setiap 3 detik
 
-  // Navigasi katalog ebook dengan tombol Prev/Next (tanpa drag, link 100% berfungsi normal)
-  const ebookCarousel = document.getElementById('ebookCarousel');
-  const ebookCards = Array.from(ebookCarousel.querySelectorAll('.ebook-card'));
-  const prevBtn = document.getElementById('carouselPrev');
-  const nextBtn = document.getElementById('carouselNext');
-  const dotsWrap = document.getElementById('carouselDots');
+        typedText.style.transition = "opacity 0.5s ease";
 
-  // Buat dot indikator sejumlah kartu
-  ebookCards.forEach((_, i) => {
-    const dot = document.createElement('div');
-    dot.className = 'carousel-dot';
-    dot.addEventListener('click', () => scrollToCard(i));
-    dotsWrap.appendChild(dot);
-  });
-  const dots = Array.from(dotsWrap.children);
+        // Navigasi katalog ebook dengan tombol Prev/Next (tanpa drag, link 100% berfungsi normal)
+        const ebookCarousel = document.getElementById('ebookCarousel');
+        const ebookCards = Array.from(ebookCarousel.querySelectorAll('.ebook-card'));
+        const prevBtn = document.getElementById('carouselPrev');
+        const nextBtn = document.getElementById('carouselNext');
+        const dotsWrap = document.getElementById('carouselDots');
 
-  // Hitung jarak geser: lebar 1 kartu + gap, disesuaikan otomatis ke ukuran layar
-  const getStep = () => {
-    if (!ebookCards.length) return 0;
-    const cardRect = ebookCards[0].getBoundingClientRect();
-    const gap = 24; // sesuai CSS "gap: 24px" pada .carousel
-    return cardRect.width + gap;
-  };
+        // Buat dot indikator sejumlah kartu
+        ebookCards.forEach((_, i) => {
+            const dot = document.createElement('div');
+            dot.className = 'carousel-dot';
+            dot.addEventListener('click', () => scrollToCard(i));
+            dotsWrap.appendChild(dot);
+        });
+        const dots = Array.from(dotsWrap.children);
 
-  const getActiveIndex = () => {
-    const step = getStep();
-    if (!step) return 0;
-    return Math.round(ebookCarousel.scrollLeft / step);
-  };
+        // Hitung jarak geser: lebar 1 kartu + gap, disesuaikan otomatis ke ukuran layar
+        const getStep = () => {
+            if (!ebookCards.length) return 0;
+            const cardRect = ebookCards[0].getBoundingClientRect();
+            const gap = 24; // sesuai CSS "gap: 24px" pada .carousel
+            return cardRect.width + gap;
+        };
 
-  const updateNavState = () => {
-    const maxScroll = ebookCarousel.scrollWidth - ebookCarousel.clientWidth - 4;
-    prevBtn.disabled = ebookCarousel.scrollLeft <= 4;
-    nextBtn.disabled = ebookCarousel.scrollLeft >= maxScroll;
+        const getActiveIndex = () => {
+            const step = getStep();
+            if (!step) return 0;
+            return Math.round(ebookCarousel.scrollLeft / step);
+        };
 
-    const activeIndex = getActiveIndex();
-    dots.forEach((dot, i) => dot.classList.toggle('active', i === activeIndex));
+        const updateNavState = () => {
+            const maxScroll = ebookCarousel.scrollWidth - ebookCarousel.clientWidth - 4;
+            prevBtn.disabled = ebookCarousel.scrollLeft <= 4;
+            nextBtn.disabled = ebookCarousel.scrollLeft >= maxScroll;
 
-    // Sembunyikan navigasi kalau semua kartu sudah muat di layar (tidak perlu geser)
-    const needsNav = ebookCarousel.scrollWidth > ebookCarousel.clientWidth + 8;
-    document.querySelector('.carousel-nav').style.display = needsNav ? 'flex' : 'none';
-  };
+            const activeIndex = getActiveIndex();
+            dots.forEach((dot, i) => dot.classList.toggle('active', i === activeIndex));
 
-  function scrollToCard(index) {
-    const step = getStep();
-    ebookCarousel.scrollTo({ left: step * index, behavior: 'smooth' });
-  }
+            // Sembunyikan navigasi kalau semua kartu sudah muat di layar (tidak perlu geser)
+            const needsNav = ebookCarousel.scrollWidth > ebookCarousel.clientWidth + 8;
+            document.querySelector('.carousel-nav').style.display = needsNav ? 'flex' : 'none';
+        };
 
-  prevBtn.addEventListener('click', () => {
-    const step = getStep();
-    ebookCarousel.scrollBy({ left: -step, behavior: 'smooth' });
-  });
+        function scrollToCard(index) {
+            const step = getStep();
+            ebookCarousel.scrollTo({ left: step * index, behavior: 'smooth' });
+        }
 
-  nextBtn.addEventListener('click', () => {
-    const step = getStep();
-    ebookCarousel.scrollBy({ left: step, behavior: 'smooth' });
-  });
+        prevBtn.addEventListener('click', () => {
+            const step = getStep();
+            ebookCarousel.scrollBy({ left: -step, behavior: 'smooth' });
+        });
 
-  ebookCarousel.addEventListener('scroll', updateNavState, { passive: true });
-  window.addEventListener('resize', updateNavState);
-  updateNavState();
+        nextBtn.addEventListener('click', () => {
+            const step = getStep();
+            ebookCarousel.scrollBy({ left: step, behavior: 'smooth' });
+        });
 
-  // Animasi Scroll Reveal
-  const reveals = document.querySelectorAll('.reveal');
-  const revealOnScroll = () => {
-    const windowHeight = window.innerHeight;
-    const elementVisible = 100;
-    
-    reveals.forEach((reveal) => {
-      const elementTop = reveal.getBoundingClientRect().top;
-      if (elementTop < windowHeight - elementVisible) {
-        reveal.classList.add('active');
-      }
-    });
-  };
-  
-  window.addEventListener('scroll', revealOnScroll);
-  revealOnScroll(); // Trigger sekali saat halaman dimuat
-</script>
+        ebookCarousel.addEventListener('scroll', updateNavState, { passive: true });
+        window.addEventListener('resize', updateNavState);
+        updateNavState();
+
+        // Animasi Scroll Reveal
+        const reveals = document.querySelectorAll('.reveal');
+        const revealOnScroll = () => {
+            const windowHeight = window.innerHeight;
+            const elementVisible = 100;
+
+            reveals.forEach((reveal) => {
+                const elementTop = reveal.getBoundingClientRect().top;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveal.classList.add('active');
+                }
+            });
+        };
+
+        window.addEventListener('scroll', revealOnScroll);
+        revealOnScroll(); // Trigger sekali saat halaman dimuat
+    </script>
 
 </body>
+
 </html>
