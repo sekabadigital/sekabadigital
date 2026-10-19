@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matematika Gampang - Trik Perkalian dari Papan Tulis</title>
+    <link rel="icon" href="https://raw.githubusercontent.com/sekabadigital/sekabadigital/main/favicon.png"
+        type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --board: #1F3A33;
+            --board-dark: #152922;
+            --chalk: #F5F1E5;
+            --paper: #FBF6EA;
+            --paper-line: #D8CDB4;
+            --ink: #26301F;
+            --muted: #6C7462;
+            --yellow: #FFC94A;
+            --coral: #FF7B6E;
+            --sky: #6BC0D8;
+            --font-hand: 'Caveat', cursive;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--paper);
+            color: var(--ink);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        button {
+            font-family: inherit;
+            cursor: pointer;
+            border: none;
+            background: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        .wrap {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: var(--font-hand);
+            line-height: 1.1;
+            font-weight: 700;
+        }
+
+        .eyebrow {
+            font-family: var(--font-hand);
+            font-size: 20px;
+            color: var(--yellow);
+        }
+
+        /* ---------- Buttons: sticker style ---------- */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: 15px;
+            padding: 14px 26px;
+            border-radius: 10px;
+            border: 2.5px solid var(--ink);
+            box-shadow: 4px 4px 0 var(--ink);
+            transition: transform .15s ease, box-shadow .15s ease;
+            background: var(--yellow);
+            color: var(--ink);
+            white-space: nowrap;
+        }
+
+        .btn:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0 var(--ink);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--chalk);
+            border-color: var(--chalk);
+            box-shadow: 4px 4px 0 rgba(245, 241, 229, .5);
+        }
+
+        .btn-ghost:hover {
+            box-shadow: 2px 2px 0 rgba(245, 241, 229, .5);
+        }
+
+        .btn-block {
+            width: 100%;
+        }
+
+        /* ---------- Header ---------- */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(251, 246, 234, .92);
+            backdrop-filter: blur(8px);
+            border-bottom: 2px solid var(--ink);
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 70px;
+        }
+
+        .logo {
+            font-family: var(--font-hand);
+            font-weight: 700;
+            font-size: 28px;
+        }
+
+        .logo span {
+            color: var(--coral);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--coral);
+        }
+
+        .nav-cta .btn {
+            padding: 9px 20px;
+            font-size: 14px;
+        }
+
+        .nav-links .mobile-cta {
+            display: none;
+        }
+
+        .burger {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: rgba(31, 36, 33, 0.05);
+            border: 2px solid var(--ink);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 0;
+        }
+
+        .burger:hover {
+            background: rgba(224, 90, 71, 0.1);
+            border-color: var(--coral);
+        }
+
+        .burger span {
+            display: block;
+            width: 20px;
+            height: 2px;
+            background: var(--ink);
+            border-radius: 2px;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease, background 0.3s ease;
+            transform-origin: center;
+        }
+
+        .burger.active span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+            background: var(--coral);
+        }
+
+        .burger.active span:nth-child(2) {
+            opacity: 0;
+            transform: scaleX(0);
+        }
+
+        .burger.active span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+            background: var(--coral);
+        }
+
+        /* ---------- Chalkboard sections ---------- */
+        .chalkboard {
+            background:
+                radial-gradient(ellipse at 15% 20%, rgba(255, 255, 255, .05), transparent 40%),
+                radial-gradient(ellipse at 85% 80%, rgba(255, 255, 255, .04), transparent 45%),
+                var(--board);
+            color: var(--chalk);
+            position: relative;
+        }
+
+        .torn-edge {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: -1px;
+            height: 34px;
+            background: var(--paper);
+            clip-path: polygon(0% 100%, 3% 30%, 7% 90%, 11% 20%, 15% 80%, 19% 10%, 23% 70%, 27% 25%, 31% 95%, 35% 15%, 39% 75%, 43% 30%, 47% 90%, 51% 20%, 55% 80%, 59% 10%, 63% 70%, 67% 30%, 71% 95%, 75% 15%, 79% 75%, 83% 25%, 87% 90%, 91% 15%, 95% 80%, 100% 100%, 100% 100%, 0% 100%);
+        }
+
+        /* ---------- Hero ---------- */
+        .hero {
+            padding: 130px 0 90px;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.05fr .95fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .hero h1 {
+            font-size: clamp(38px, 5vw, 58px);
+            margin: 18px 0 22px;
+            position: relative;
+        }
+
+        .hero .word-circle {
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero .word-circle svg {
+            position: absolute;
+            top: -14px;
+            left: -16px;
+            right: -16px;
+            bottom: -10px;
+            width: calc(100% + 32px);
+            height: calc(100% + 24px);
+        }
+
+        .hero p.lead {
+            font-size: 17px;
+            color: #D9E4DE;
+            max-width: 480px;
+            margin-bottom: 34px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* ---------- Equation demo card ---------- */
+        .equation-card {
+            background: rgba(255, 255, 255, .05);
+            border: 2px dashed rgba(245, 241, 229, .35);
+            border-radius: 20px;
+            padding: 34px 24px;
+            text-align: center;
+        }
+
+        .eq-row {
+            font-family: var(--font-hand);
+            font-size: 56px;
+            display: flex;
+            justify-content: center;
+            gap: 36px;
+        }
+
+        .eq-circles {
+            display: flex;
+            justify-content: center;
+            gap: 36px;
+            margin-top: 6px;
+        }
+
+        .chalk-circle {
+            width: 52px;
+            height: 52px;
+            border: 3px solid var(--yellow);
+            border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-hand);
+            font-size: 26px;
+            transform: rotate(-4deg);
+        }
+
+        .chalk-circle.sky {
+            border-color: var(--sky);
+            transform: rotate(3deg);
+        }
+
+        .eq-note {
+            font-size: 14px;
+            color: #B9C6BF;
+            margin-top: 14px;
+            font-family: var(--font-body);
+        }
+
+        .eq-result {
+            font-family: var(--font-hand);
+            font-size: 34px;
+            margin-top: 14px;
+            color: var(--yellow);
+        }
+
+        .eq-result strong {
+            color: var(--chalk);
+        }
+
+        /* ---------- Pain / intro paper section ---------- */
+        .pain {
+            padding: 80px 0 40px;
+        }
+
+        .pain .wrap {
+            max-width: 720px;
+            text-align: center;
+        }
+
+        .pain h2 {
+            font-size: clamp(26px, 3.5vw, 34px);
+            margin-bottom: 14px;
+        }
+
+        .pain p {
+            color: var(--muted);
+            font-size: 16px;
+        }
+
+        /* ---------- Section heads (paper) ---------- */
+        .section-head {
+            max-width: 640px;
+            margin: 0 auto 48px;
+            text-align: center;
+        }
+
+        .section-head h2 {
+            font-size: clamp(28px, 4vw, 38px);
+            margin-bottom: 10px;
+        }
+
+        .section-head p {
+            color: var(--muted);
+            font-size: 16px;
+        }
+
+        /* ---------- Materi: sticky notes ---------- */
+        .materi {
+            padding: 80px 0 100px;
+            position: relative;
+        }
+
+        .materi::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background-image: repeating-linear-gradient(rgba(108, 116, 98, .08) 0 1px, transparent 1px 34px);
+            background-position: 0 130px;
+        }
+
+        .sticky-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 26px;
+            position: relative;
+        }
+
+        .sticky {
+            background: #fff;
+            border: 2px solid var(--ink);
+            border-radius: 6px;
+            padding: 26px 22px;
+            box-shadow: 5px 5px 0 rgba(38, 48, 31, .12);
+            position: relative;
+        }
+
+        .sticky:nth-child(odd) {
+            transform: rotate(-1.4deg);
+        }
+
+        .sticky:nth-child(even) {
+            transform: rotate(1.2deg);
+        }
+
+        .sticky::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-4deg);
+            width: 38px;
+            height: 14px;
+            background: rgba(255, 201, 74, .75);
+            border: 1px solid rgba(38, 48, 31, .2);
+        }
+
+        .sticky .tag {
+            font-family: var(--font-hand);
+            font-size: 26px;
+            margin-bottom: 8px;
+        }
+
+        .sticky p {
+            color: var(--muted);
+            font-size: 14.5px;
+        }
+
+        /* ---------- Cara kerja (chalkboard soft) ---------- */
+        .cara {
+            padding: 110px 0 90px;
+        }
+
+        .cara .section-head h2,
+        .cara .section-head p {
+            color: var(--chalk);
+        }
+
+        .cara .section-head p {
+            color: #C3D0C9;
+        }
+
+        .steps-list {
+            max-width: 640px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .step-row {
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+        }
+
+        .step-badge {
+            flex-shrink: 0;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 2.5px solid var(--yellow);
+            color: var(--yellow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-hand);
+            font-size: 22px;
+        }
+
+        .step-row h3 {
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: 17px;
+            color: var(--chalk);
+            margin-bottom: 4px;
+        }
+
+        .step-row p {
+            font-size: 14.5px;
+            color: #C3D0C9;
+        }
+
+        /* ---------- Pricing: workbook cover ---------- */
+        .harga {
+            padding: 100px 0;
+        }
+
+        .workbook {
+            max-width: 760px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1.15fr;
+            background: #fff;
+            border: 2.5px solid var(--ink);
+            border-radius: 16px;
+            box-shadow: 8px 8px 0 rgba(38, 48, 31, .15);
+            overflow: hidden;
+        }
+
+        .cover {
+            background: linear-gradient(160deg, #26463D, var(--board));
+            color: var(--chalk);
+            padding: 40px 26px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 8px;
+            border-right: 2.5px dashed rgba(245, 241, 229, .3);
+        }
+
+        .cover .spiral {
+            position: absolute;
+            left: -1px;
+            top: 0;
+            bottom: 0;
+            width: 18px;
+            background-image: radial-gradient(circle, var(--paper) 4px, transparent 4.5px);
+            background-size: 18px 22px;
+            background-repeat: repeat-y;
+            background-position: center;
+        }
+
+        .cover h3 {
+            font-size: 34px;
+        }
+
+        .cover p {
+            font-size: 14px;
+            color: #C3D0C9;
+        }
+
+        .cover .by {
+            font-size: 12px;
+            opacity: .7;
+            margin-top: 18px;
+        }
+
+        .details {
+            padding: 36px 30px;
+        }
+
+        .details .badge {
+            display: inline-block;
+            font-family: var(--font-hand);
+            font-size: 20px;
+            color: var(--coral);
+            margin-bottom: 10px;
+        }
+
+        .details h4 {
+            font-family: var(--font-body);
+            font-weight: 700;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .details>p {
+            color: var(--muted);
+            font-size: 14.5px;
+            margin-bottom: 20px;
+        }
+
+        .checklist {
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+            margin-bottom: 22px;
+        }
+
+        .check-item {
+            display: flex;
+            gap: 8px;
+            font-size: 14.5px;
+        }
+
+        .check-item span {
+            color: var(--coral);
+            font-weight: 700;
+        }
+
+        .price-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 4px 10px;
+            margin-bottom: 18px;
+            padding-top: 16px;
+            border-top: 1px dashed var(--paper-line);
+        }
+
+        .price-row .label {
+            width: 100%;
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        .price-row .strike {
+            color: var(--muted);
+            text-decoration: line-through;
+            font-size: 14px;
+        }
+
+        .price-row .amount {
+            font-family: var(--font-hand);
+            font-size: 44px;
+            font-weight: 700;
+            line-height: 1;
+            color: var(--coral);
+        }
+
+        .trust-note {
+            margin-top: 14px;
+            font-size: 13px;
+            color: var(--muted);
+            background: var(--paper);
+            border: 1px dashed var(--paper-line);
+            border-radius: 8px;
+            padding: 10px 12px;
+        }
+
+        /* ---------- FAQ: notepad ---------- */
+        .faq {
+            padding: 90px 0 110px;
+        }
+
+        .notepad {
+            max-width: 700px;
+            margin: 0 auto;
+            background: #fff;
+            border: 2px solid var(--ink);
+            border-radius: 12px;
+            box-shadow: 6px 6px 0 rgba(38, 48, 31, .1);
+            overflow: hidden;
+        }
+
+        .faq-item {
+            border-bottom: 1px dashed var(--paper-line);
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-q {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 24px;
+            font-weight: 600;
+            font-size: 15.5px;
+            text-align: left;
+        }
+
+        .faq-icon {
+            font-family: var(--font-hand);
+            font-size: 24px;
+            color: var(--coral);
+            transition: transform .3s ease;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        .faq-a {
+            max-height: 0;
+            overflow: hidden;
+            padding: 0 24px;
+            color: var(--muted);
+            font-size: 14.5px;
+            transition: all .3s ease;
+        }
+
+        .faq-item.active .faq-a {
+            max-height: 260px;
+            padding: 0 24px 20px;
+        }
+
+        /* ---------- Footer ---------- */
+        .footer {
+            padding: 70px 0 34px;
+            position: relative;
+        }
+
+        .footer .torn-edge {
+            top: -1px;
+            bottom: auto;
+            background: var(--board);
+            transform: rotate(180deg);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 36px;
+            margin-bottom: 50px;
+            padding-top: 20px;
+        }
+
+        .f-brand h2 {
+            font-size: 30px;
+            margin-bottom: 12px;
+        }
+
+        .f-brand span {
+            color: var(--yellow);
+        }
+
+        .f-brand p {
+            color: #9FAEA6;
+            max-width: 280px;
+            font-size: 14px;
+        }
+
+        .f-links h4 {
+            font-family: var(--font-body);
+            font-weight: 600;
+            margin-bottom: 16px;
+            font-size: 15px;
+        }
+
+        .f-links ul {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            font-size: 14px;
+        }
+
+        .f-links a {
+            color: #9FAEA6;
+        }
+
+        .f-links a:hover {
+            color: var(--yellow);
+        }
+
+        .f-bottom {
+            border-top: 1px solid rgba(245, 241, 229, .15);
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            color: #7E8C84;
+            font-size: 13px;
+        }
+
+        /* ---------- Fade in ---------- */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: all .7s cubic-bezier(.16, 1, .3, 1);
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ---------- Responsive ---------- */
+        @media (max-width:960px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero p.lead {
+                margin: 0 auto 34px;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .sticky-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .workbook {
+                grid-template-columns: 1fr;
+            }
+
+            .cover {
+                border-right: none;
+                border-bottom: 2.5px dashed rgba(245, 241, 229, .3);
+            }
+        }
+
+        @media (max-width: 768px) {
+
+            .nav-cta .btn {
+                display: none;
+            }
+
+            .burger {
+                display: flex;
+            }
+
+            /* Mobile Dropdown Menu */
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: #FDFBF7;
+                border-bottom: 2px solid var(--ink);
+                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+                flex-direction: column;
+                gap: 8px;
+                padding: 0 24px;
+                max-height: 0;
+                opacity: 0;
+                overflow: hidden;
+                visibility: hidden;
+                pointer-events: none;
+                transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                            opacity 0.25s ease,
+                            padding 0.35s ease,
+                            visibility 0.35s ease;
+            }
+
+            .nav-links.active {
+                max-height: 380px;
+                opacity: 1;
+                visibility: visible;
+                pointer-events: auto;
+                padding: 16px 24px 20px;
+            }
+
+            .nav-links a {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 12px 16px;
+                border-radius: 10px;
+                font-size: 15px;
+                font-weight: 600;
+                color: var(--ink);
+                background: rgba(31, 36, 33, 0.03);
+                border: 1.5px solid var(--border);
+                transition: all 0.25s ease;
+            }
+
+            .nav-links a::after {
+                content: '→';
+                font-size: 16px;
+                color: var(--muted);
+                transition: transform 0.25s ease, color 0.25s ease;
+            }
+
+            .nav-links a:hover,
+            .nav-links a:active {
+                background: rgba(224, 90, 71, 0.1);
+                border-color: var(--coral);
+                color: var(--coral);
+                padding-left: 20px;
+            }
+
+            .nav-links a:hover::after,
+            .nav-links a:active::after {
+                color: var(--coral);
+                transform: translateX(4px);
+            }
+
+            .nav-links .mobile-cta {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-top: 4px;
+                padding: 12px 20px;
+                background: var(--coral);
+                color: #fff;
+                border-radius: 100px;
+                font-weight: 700;
+                border: none;
+            }
+
+            .nav-links .mobile-cta::after {
+                display: none;
+            }
+
+            .nav-links .mobile-cta:hover {
+                background: #c84634;
+                color: #fff;
+                padding-left: 20px;
+            }
+
+            .sticky-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 28px;
+            }
+
+            .f-bottom {
+                flex-direction: column;
+                gap: 12px;
+                text-align: center;
+            }
+
+            .eq-row {
+                font-size: 42px;
+                gap: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="wrap nav">
+            <div class="logo">Sekaba<span>Digital</span></div>
+            <div class="nav-links">
+                <a href="#fitur">Materi</a>
+                <a href="#cara-kerja">Cara Pakai</a>
+                <a href="#harga">Harga</a>
+                <a href="#faq">FAQ</a>
+                <a href="#harga" class="mobile-cta">Ambil Ebooknya (Rp 19.000)</a>
+            </div>
+            <div class="nav-cta">
+                <a href="#harga" class="btn">Ambil Ebooknya</a>
+                <button class="burger" aria-label="Buka Menu" aria-expanded="false" type="button"><span></span><span></span><span></span></button>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero chalkboard">
+        <div class="wrap hero-grid">
+            <div class="fade-up">
+                <span class="eyebrow">✏️ Quick Tips - Perkalian</span>
+                <h1>Matematika itu bukan soal jago, tapi soal
+                    <span class="word-circle">tau triknya
+                        <svg viewBox="0 0 240 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M10,38 C8,14 60,4 120,6 C180,8 232,16 230,38 C228,60 175,66 118,65 C58,64 12,60 10,38 Z"
+                                stroke="#FFC94A" stroke-width="3" stroke-linecap="round" />
+                            <path d="M14,40 C16,18 66,8 122,9 C176,10 226,20 224,40" stroke="#FFC94A" stroke-width="2"
+                                stroke-linecap="round" opacity="0.6" />
+                        </svg>
+                    </span>
+                </h1>
+                <p class="lead">Trik cepat mengalikan angka besar tanpa kalkulator dan tanpa hafalan tabel. Dari 7 × 8
+                    sampai 96 × 97, semua bisa dihitung di kepala begitu kamu paham polanya.</p>
+                <div class="hero-buttons">
+                    <a href="#harga" class="btn">Mulai Belajar Sekarang</a>
+                    <a href="#fitur" class="btn btn-ghost">Lihat Daftar Isi</a>
+                </div>
+            </div>
+            <div class="equation-card fade-up" style="transition-delay:.15s;">
+                <div class="eq-row"><span>7</span><span>×</span><span>8</span></div>
+                <div class="eq-circles">
+                    <span class="chalk-circle">3</span>
+                    <span class="chalk-circle sky">2</span>
+                </div>
+                <div class="eq-result">50 + 6 = <strong>56</strong></div>
+            </div>
+        </div>
+        <div class="torn-edge"></div>
+    </section>
+
+    <section class="pain">
+        <div class="wrap fade-up">
+            <h2>Capek lihat soal perkalian dan langsung nyerah?</h2>
+            <p>Kamu nggak sendirian. Ebook ini dibuat khusus buat yang ngerasa matematika itu ribet - dengan trik
+                lingkaran sederhana yang bisa langsung dipraktikkan, bukan rumus panjang yang bikin pusing.</p>
+        </div>
+    </section>
+
+    <section class="materi" id="fitur">
+        <div class="wrap">
+            <div class="section-head fade-up">
+                <h2>Bongkar Semua Trik Perkaliannya</h2>
+                <p>43 halaman, ditulis santai, langkah demi langkah - ini yang akan kamu kuasai.</p>
+            </div>
+            <div class="sticky-grid">
+                <div class="sticky fade-up">
+                    <div class="tag">🔟 Trik Lingkaran</div>
+                    <p>Kuasai 7 x 8 sampai bilangan puluhan pakai bilangan rujukan 10, 20, 50, sampai 100.</p>
+                </div>
+                <div class="sticky fade-up" style="transition-delay:.05s;">
+                    <div class="tag">💯 Bilangan Besar</div>
+                    <p>96 x 97 atau 106 x 104 nggak perlu susun kolom panjang lagi, cukup rujukan 100.</p>
+                </div>
+                <div class="sticky fade-up" style="transition-delay:.1s;">
+                    <div class="tag">🧩 Gabungan Metode</div>
+                    <p>Kombinasikan beberapa trik sekaligus untuk soal yang lebih menantang, seperti 92 x 93.</p>
+                </div>
+                <div class="sticky fade-up">
+                    <div class="tag">🔢 Perkalian Faktor</div>
+                    <p>Manfaatkan 20 = 2 x 10 supaya 23 x 24 terasa seringan 2 x 10.</p>
+                </div>
+                <div class="sticky fade-up" style="transition-delay:.05s;">
+                    <div class="tag">🔣 Desimal Gak Ribet</div>
+                    <p>Kalikan angka berkoma seperti 9,6 x 9,7 tanpa bingung soal titik desimalnya.</p>
+                </div>
+                <div class="sticky fade-up" style="transition-delay:.1s;">
+                    <div class="tag">✅ Cek Jawaban Sendiri</div>
+                    <p>Pakai trik "menghilangkan 9" buat langsung tahu jawabanmu benar atau meleset.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cara chalkboard" id="cara-kerja">
+        <div class="wrap">
+            <div class="section-head fade-up">
+                <h2>Cuma 3 Langkah, Nggak Ribet</h2>
+                <p>Semua trik di buku ini pakai pola yang sama seperti contoh 7 x 8 di atas.</p>
+            </div>
+            <div class="steps-list">
+                <div class="step-row fade-up">
+                    <div class="step-badge">1</div>
+                    <div>
+                        <h3>Tulis selisih dari bilangan rujukan</h3>
+                        <p>Pilih rujukan terdekat (misalnya 10), lalu lingkari selisih tiap angka darinya.</p>
+                    </div>
+                </div>
+                <div class="step-row fade-up" style="transition-delay:.05s;">
+                    <div class="step-badge">2</div>
+                    <div>
+                        <h3>Kurangi atau tambah secara diagonal</h3>
+                        <p>Kurangi salah satu angka dengan selisih pasangannya, lalu kalikan dengan bilangan rujukan.
+                        </p>
+                    </div>
+                </div>
+                <div class="step-row fade-up" style="transition-delay:.1s;">
+                    <div class="step-badge">3</div>
+                    <div>
+                        <h3>Kalikan angka di lingkaran, gabungkan</h3>
+                        <p>Kalikan angka-angka selisih, lalu tambahkan ke hasil sebelumnya. Selesai!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="torn-edge"></div>
+    </section>
+
+    <section class="harga" id="harga">
+        <div class="wrap">
+            <div class="section-head fade-up">
+                <h2>Akses Ilmu Ini Sekarang Juga!</h2>
+                <p>Kami percaya semua orang berhak belajar berhitung dengan cara yang menyenangkan.</p>
+            </div>
+            <div class="workbook fade-up">
+                <div class="cover">
+                    <div class="spiral"></div>
+                    <h3>Matematika Gampang</h3>
+                    <p>(Perkalian) - Trik Cepat untuk yang Gak Jago Matematika</p>
+                    <div class="by">Oleh: Sekaba Digital</div>
+                </div>
+                <div class="details">
+                    <span class="badge">Harga Promo Terbatas</span>
+                    <h4>Ambil Sebelum Promo Berakhir!</h4>
+                    <p>Ebook 43 halaman berisi trik lengkap dari perkalian dasar sampai bilangan besar, lengkap latihan
+                        soal dan kunci jawaban di tiap bab.</p>
+                    <div class="checklist">
+                        <div class="check-item"><span>✓</span> File PDF langsung bisa di-download</div>
+                        <div class="check-item"><span>✓</span> Bahasa simpel, santai, & mudah dipahami</div>
+                        <div class="check-item"><span>✓</span> Cocok untuk pelajar, orang tua, dan siapa pun</div>
+                    </div>
+                    <div class="price-row">
+                        <span class="label">Harga Normal <span class="strike">Rp 59.000</span> — Harga Promo:</span>
+                        <span class="amount">Rp 19.000</span>
+                    </div>
+                    <a href="http://lynk.id/sekabadigital/74ov4l0zk2eg/checkout" class="btn btn-block"
+                        target="_blank">Beli Sekarang & Download</a>
+                    <div class="trust-note">Sekali bayar, file PDF langsung tersedia. Beli sekarang sebelum harga
+                        kembali normal!</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq" id="faq">
+        <div class="wrap">
+            <div class="section-head fade-up">
+                <h2>Pertanyaan yang Sering Muncul</h2>
+            </div>
+            <div class="notepad fade-up">
+                <div class="faq-item">
+                    <button class="faq-q">Saya emang gak jago matematika, apa masih bisa ngikutin? <span
+                            class="faq-icon">+</span></button>
+                    <div class="faq-a">Justru buku ini dirancang khusus buat kamu yang merasa matematika itu sulit.
+                        Semua trik dijelaskan langkah demi langkah dengan bahasa santai.</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-q">Apakah saya harus hapal tabel perkalian dulu? <span
+                            class="faq-icon">+</span></button>
+                    <div class="faq-a">Nggak perlu. Trik di buku ini justru menggantikan hafalan tabel. Kalau kamu sudah
+                        hapal, trik ini tetap jadi bonus supaya makin cepat.</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-q">Cocok untuk anak sekolah atau orang dewasa? <span
+                            class="faq-icon">+</span></button>
+                    <div class="faq-a">Keduanya cocok. Cocok untuk pelajar yang mau lebih cepat mengerjakan soal, sampai
+                        orang dewasa yang mau lancar berhitung sehari-hari.</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-q">Apakah ada latihan soal dan kunci jawabannya? <span
+                            class="faq-icon">+</span></button>
+                    <div class="faq-a">Ada. Setiap bab dilengkapi soal latihan dan kunci jawaban, plus trik untuk
+                        mengecek sendiri hasil perkalianmu.</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-q">Sampai kapan harga promo Rp19.000 berlaku? <span
+                            class="faq-icon">+</span></button>
+                    <div class="faq-a">Harga promo Rp19.000 berlaku untuk waktu terbatas. Setelah promo berakhir, harga
+                        ebook kembali ke harga normal Rp59.000. Jadi kalau memang berniat belajar, lebih hemat ambil
+                        sekarang.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer chalkboard">
+        <div class="torn-edge"></div>
+        <div class="wrap">
+            <div class="footer-grid">
+                <div class="f-brand">
+                    <h2>Sekaba<span>Digital</span></h2>
+                    <p>Hasil besar lahir dari langkah kecil yang dilakukan secara konsisten. Mulai perjalanan belajarmu
+                        hari ini.</p>
+                </div>
+                <div class="f-links">
+                    <h4>Navigasi</h4>
+                    <ul>
+                        <li><a href="#fitur">Materi Ebook</a></li>
+                        <li><a href="#cara-kerja">Cara Pakai</a></li>
+                        <li><a href="#harga">Download Ebook</a></li>
+                    </ul>
+                </div>
+                <div class="f-links">
+                    <h4>Kontak & Legal</h4>
+                    <ul>
+                        <li><a href="#">Bantuan (FAQ)</a></li>
+                        <li><a href="#">Syarat & Ketentuan</a></li>
+                        <li><a href="#">Kebijakan Privasi</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="f-bottom">
+                <div>© 2026 Sekaba Digital. All rights reserved.</div>
+                <div>Dibuat untuk mendukung belajar matematika bareng-bareng.</div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Navigation Dropdown
+        const burger = document.querySelector('.burger');
+        const navLinks = document.querySelector('.nav-links');
+
+        if (burger && navLinks) {
+            burger.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const isOpen = navLinks.classList.toggle('active');
+                burger.classList.toggle('active', isOpen);
+                burger.setAttribute('aria-expanded', isOpen);
+            });
+
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                    burger.classList.remove('active');
+                    burger.setAttribute('aria-expanded', 'false');
+                });
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!burger.contains(e.target) && !navLinks.contains(e.target)) {
+                    navLinks.classList.remove('active');
+                    burger.classList.remove('active');
+                    burger.setAttribute('aria-expanded', 'false');
+                }
+            });
+        }
+
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            const btn = item.querySelector('.faq-q');
+            btn.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                faqItems.forEach(el => el.classList.remove('active'));
+                if (!isActive) item.classList.add('active');
+            });
+        });
+
+        const fadeElements = document.querySelectorAll('.fade-up');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        fadeElements.forEach(el => observer.observe(el));
+    </script>
+
+</body>
+
+</html>
